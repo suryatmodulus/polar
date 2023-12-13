@@ -1,4 +1,8 @@
+'use client'
+
+import useDebouncedCallback from '@/hooks/utils'
 import { upload } from '@vercel/blob/client'
+import { useCompletion } from 'ai/react'
 import { TextArea } from 'polarkit/components/ui/atoms'
 import {
   ChangeEventHandler,
@@ -8,6 +12,7 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -26,7 +31,21 @@ export const MarkdownEditor = ({
   onChange,
   autoFocus,
 }: MarkdownEditorProps) => {
+  const [completion, setCompletion] = useState<string>()
   const ref = useRef<HTMLTextAreaElement>(null)
+  const { complete } = useCompletion({
+    onFinish: (prompt, completion) => setCompletion(completion),
+  })
+
+  useEffect(() => {
+    if (ref.current) {
+      const text = `\n\n${completion}`
+      insertTextAtCursor(text, ref.current)
+      onChange?.(ref.current.value)
+      console.log(completion)
+    }
+  }, [completion])
+
   const insertTextAtCursor = useCallback(
     (text: string, element: HTMLTextAreaElement) => {
       const cursorPosition = element.selectionStart
@@ -126,6 +145,22 @@ export const MarkdownEditor = ({
     [onChange, insertTextAtCursor],
   )
 
+  const fire = useDebouncedCallback(
+    (element: HTMLTextAreaElement) => {
+      if (element instanceof HTMLTextAreaElement) {
+        const reg = new RegExp(/(\/\/\s.)(.*)/g)
+        const match = reg.exec(element.value)
+
+        if (match?.[0]) {
+          const prompt = match[0].replace('// ', '')
+          complete(prompt)
+        }
+      }
+    },
+    1000,
+    [complete],
+  )
+
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = useCallback(
     (e) => {
       /** Handle tab presses */
@@ -134,8 +169,10 @@ export const MarkdownEditor = ({
         insertTextAtCursor('\t', e.target)
         onChange?.(e.target.value)
       }
+
+      fire(e.target)
     },
-    [onChange, insertTextAtCursor],
+    [onChange, insertTextAtCursor, complete],
   )
 
   const allow: DragEventHandler<HTMLTextAreaElement> = useCallback((e) => {

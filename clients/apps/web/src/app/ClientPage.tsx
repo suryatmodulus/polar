@@ -8,7 +8,6 @@ import {
   LanguageOutlined,
 } from '@mui/icons-material'
 import { HTMLMotionProps, Variants, motion } from 'framer-motion'
-import Image from 'next/image'
 import NextLink, { LinkProps } from 'next/link'
 import { LogoIcon } from 'polarkit/components/brand'
 import { PropsWithChildren, useEffect, useRef } from 'react'
@@ -191,32 +190,104 @@ const ClientPage = () => {
           className="flex w-full flex-row justify-between gap-y-12 bg-gray-100 p-32 text-gray-950"
         >
           <div className="relative mx-auto flex max-w-screen-xl flex-col justify-between gap-24">
-            <Image
-              className="w-full rounded-[2.5rem] shadow-2xl"
-              alt="Creator"
-              src="/tiers.png"
-              width={1200}
-              height={800}
-            />
-            <div className="flex flex-col items-center gap-8 text-center">
-              <h3 className="text-3xl font-semibold text-blue-500">
+            <motion.div
+              className="flex flex-col items-center gap-8 text-center"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ staggerChildren: 0.2 }}
+            >
+              <motion.h3
+                className="text-3xl font-semibold text-blue-500"
+                variants={{
+                  visible: {
+                    opacity: 1,
+                    transition: { duration: 1.5 },
+                  },
+                  hidden: {
+                    opacity: 0,
+                  },
+                }}
+              >
                 Create with Polar
-              </h3>
-              <h1 className="text-6xl !font-bold leading-snug text-gray-950">
+              </motion.h3>
+              <motion.h1
+                className="text-6xl !font-bold leading-snug text-gray-950"
+                variants={{
+                  visible: {
+                    opacity: 1,
+                    transition: { duration: 1.5 },
+                  },
+                  hidden: {
+                    opacity: 0,
+                  },
+                }}
+              >
                 Grow an audience
-              </h1>
-              <p className="w-2/3 text-3xl leading-snug text-gray-500">
+              </motion.h1>
+              <motion.p
+                className="w-2/3 text-3xl leading-snug text-gray-500"
+                variants={{
+                  visible: {
+                    opacity: 1,
+                    transition: { duration: 1.5 },
+                  },
+                  hidden: {
+                    opacity: 0,
+                  },
+                }}
+              >
                 Distribute exclusive content & transform your coding passion
                 into a monthly income stream
-              </p>
-            </div>
-            <div className="grid w-full grid-cols-3 gap-8">
+              </motion.p>
+            </motion.div>
+            <motion.img
+              className="w-full rounded-[2.5rem] shadow-2xl"
+              src="/tiers.png"
+              initial="hidden"
+              variants={{
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 1,
+                    ease: [0.6, 0, 0.4, 1],
+                    delay: 0.4,
+                  },
+                },
+                hidden: {
+                  opacity: 0,
+                  y: 50,
+                },
+              }}
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ staggerChildren: 0.06 }}
+            />
+            <motion.div
+              className="grid w-full grid-cols-3 gap-8"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ staggerChildren: 0.08 }}
+            >
               {featureCards.map((card, i) => (
-                <NextLink
+                <motion.a
                   key={i}
                   href="#"
+                  variants={{
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 1.5, ease: [0.65, 0, 0.35, 1] },
+                    },
+                    hidden: {
+                      opacity: 0,
+                      y: 100,
+                    },
+                  }}
                   className={twMerge(
-                    'row-span-1 flex flex-col rounded-[3rem] border-4 border-white bg-white p-12 transition-colors duration-300 hover:border-blue-50',
+                    'row-span-1 flex flex-col rounded-[3rem] border-4 border-white bg-white p-12 transition-colors duration-300 hover:border-gray-200',
                     card.wide
                       ? 'col-span-2 items-center justify-center gap-y-2 text-center'
                       : 'items-start gap-y-8',
@@ -240,19 +311,66 @@ const ClientPage = () => {
                       {card.description}
                     </h3>
                   </div>
-                </NextLink>
+                </motion.a>
               ))}
-            </div>
+            </motion.div>
           </div>
         </motion.section>
-        {/*  <motion.footer className="flex w-full flex-col items-center bg-black p-32">
+
+        <motion.section
+          id="support"
+          className="flex w-full flex-row justify-between gap-y-12 bg-blue-50 p-32 text-gray-950"
+        >
+          <div className="relative mx-auto flex max-w-screen-xl flex-col justify-between gap-24">
+            <div className="flex flex-col items-center gap-8 text-center">
+              <h3 className="text-3xl font-semibold text-blue-500">
+                Follow with Polar
+              </h3>
+              <h1 className="text-6xl !font-bold leading-snug text-black">
+                Support your favorite creators
+              </h1>
+              <p className="w-2/3 text-3xl leading-snug text-blue-300">
+                Distribute exclusive content & transform your coding passion
+                into a monthly income stream
+              </p>
+            </div>
+            <motion.img
+              className="w-full rounded-[2.5rem] shadow-2xl"
+              src="/tiers.png"
+              initial="hidden"
+              variants={{
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 1, ease: [0.6, 0, 0.4, 1] },
+                },
+                hidden: {
+                  opacity: 0,
+                  y: 50,
+                },
+              }}
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ staggerChildren: 0.06 }}
+            />
+            <motion.div
+              className="grid w-full grid-cols-3 gap-8"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ staggerChildren: 0.08 }}
+            ></motion.div>
+          </div>
+        </motion.section>
+
+        <motion.footer className="flex w-full flex-col items-center bg-white p-32 text-gray-950">
           <div
             className={twMerge(
-              'flex w-full flex-col gap-x-16 gap-y-24 md:max-w-7xl md:flex-row md:justify-between md:gap-y-12',
+              'flex w-full flex-col gap-x-16 gap-y-24 md:max-w-screen-xl md:flex-row md:justify-between md:gap-y-12',
             )}
           >
             <div className="flex flex-col gap-y-8">
-              <h3 className="dark:text-polar-50 text-xl">Creator</h3>
+              <h3 className="text-xl font-medium">Creator</h3>
               <div className="flex flex-col gap-y-1">
                 <FooterLink href="/new">Subscriptions</FooterLink>
                 <FooterLink href="/new">Benefits</FooterLink>
@@ -264,7 +382,7 @@ const ClientPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-y-8">
-              <h3 className="dark:text-polar-50 text-xl">Supporter</h3>
+              <h3 className="text-xl font-medium">Supporter</h3>
               <div className="flex flex-col gap-y-1">
                 <FooterLink href="/new">Subscriptions</FooterLink>
                 <FooterLink href="/new">Benefits</FooterLink>
@@ -273,7 +391,7 @@ const ClientPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-y-8">
-              <h3 className="dark:text-polar-50 text-xl">Company</h3>
+              <h3 className="text-xl font-medium">Company</h3>
               <div className="flex flex-col gap-y-1">
                 <FooterLink href="/careers">Careers</FooterLink>
                 <FooterLink href="https://blog.polar.sh">Blog</FooterLink>
@@ -286,13 +404,13 @@ const ClientPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-y-8">
-              <h3 className="dark:text-polar-50 text-xl">Community</h3>
+              <h3 className="text-xl font-medium">Community</h3>
               <div className="flex flex-col gap-y-1">
                 <FooterLink href="https://discord.gg/STfRufb32V">
                   Join our Discord
                 </FooterLink>
                 <FooterLink href="https://github.com/polarsource">
-                  Github
+                  GitHub
                 </FooterLink>
                 <FooterLink href="https://x.com/polar_sh">
                   X / Twitter
@@ -300,14 +418,14 @@ const ClientPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-y-8">
-              <h3 className="dark:text-polar-50 text-xl">Support</h3>
+              <h3 className="text-xl font-medium">Support</h3>
               <div className="flex flex-col gap-y-1">
                 <FooterLink href="/faq">FAQ</FooterLink>
                 <FooterLink href="mailto:support@polar.sh">Contact</FooterLink>
               </div>
             </div>
           </div>
-        </motion.footer> */}
+        </motion.footer>
       </main>
     </>
   )

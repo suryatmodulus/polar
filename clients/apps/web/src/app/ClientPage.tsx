@@ -1,6 +1,5 @@
 'use client'
 
-import { ArrowUpRightIcon } from '@heroicons/react/24/outline'
 import {
   ArrowForward,
   BoltOutlined,
@@ -106,7 +105,7 @@ const ClientPage = () => {
     <>
       <main className="flex flex-col bg-black text-white">
         <motion.header
-          className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-between py-16"
+          className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-center px-16 py-16"
           variants={{
             initial: { opacity: 0 },
             animate: { opacity: 1, transition: { delay: 1.2, duration: 1 } },
@@ -114,26 +113,23 @@ const ClientPage = () => {
           initial="initial"
           animate="animate"
         >
-          <div className="flex flex-row items-center gap-x-24">
-            <Link href="/">
-              <LogoIcon className="h-16 w-16" />
-            </Link>
-            <ul className="flex flex-row gap-x-12 text-xl font-light">
+          <div className="flex flex-row items-center justify-center gap-x-24">
+            <ul className="flex flex-row gap-x-16 text-xl font-light">
               <Link href="#maintainer">Creator</Link>
               <Link href="#backer">Supporter</Link>
               <Link href="#community">Community</Link>
-              <Link href="#company">Company</Link>
-            </ul>
-          </div>
-          <div className="flex flex-row items-center gap-x-24">
-            <ul className="flex flex-row gap-x-12 text-xl font-light">
-              <Link href="/login">Log in</Link>
+              <NextLink
+                href="https://github.com/polarsource/polar"
+                target="_blank"
+              >
+                Open Source
+              </NextLink>
             </ul>
           </div>
         </motion.header>
         <motion.section
           ref={ref}
-          className="relative flex h-screen w-full flex-col justify-between p-32 "
+          className="relative flex h-screen w-full flex-col justify-between p-16"
         >
           <canvas
             id="gradient-canvas"
@@ -149,6 +145,9 @@ const ClientPage = () => {
             initial="initial"
             animate="animate"
           >
+            <TextReveal>
+              <LogoIcon className="h-24 w-24" />{' '}
+            </TextReveal>
             <h1 className="text-center text-5xl leading-snug tracking-tight lg:text-[calc(100vw_/_20)]">
               <TextReveal>
                 A creator platform for
@@ -180,22 +179,23 @@ const ClientPage = () => {
                 className="flex flex-row items-center gap-x-4 whitespace-nowrap bg-transparent py-4 font-light md:text-xl"
                 href="https://github.com/polarsource/polar"
               >
-                <span>Open Source</span>
-                <ArrowUpRightIcon className="h-5 w-5" />
+                <span>Sign In</span>
               </Link>
             </motion.div>
           </motion.div>
         </motion.section>
         <motion.section className="flex w-full flex-row justify-between gap-y-12 bg-white p-32 text-gray-950">
           <div className="mx-auto flex max-w-screen-2xl flex-row justify-between gap-24">
-            <div className="flex w-1/3 flex-col gap-y-12">
-              <h1 className="text-6xl !font-medium">Grow an audience</h1>
-              <p className="max-w-lg text-2xl leading-normal text-gray-600">
+            <div className="flex flex-col gap-y-12">
+              <h1 className="text-6xl !font-medium leading-tight">
+                Create with Polar
+              </h1>
+              <p className="max-w-lg text-3xl leading-snug text-gray-600">
                 Distribute exclusive content & transform your coding passion
-                into a monthly income stream.
+                into a monthly income stream
               </p>
             </div>
-            <div className="grid w-2/3 grid-cols-3 gap-8">
+            <div className="grid w-full grid-cols-3 gap-8">
               <div className="row-span-1 flex flex-col gap-y-8 rounded-[2rem] bg-blue-50 bg-opacity-50 p-10">
                 <LogoIcon className="-ml-2 h-16 w-16 text-blue-500" />
                 <div className="flex flex-col gap-y-2">
@@ -209,6 +209,11 @@ const ClientPage = () => {
                 </div>
               </div>
               <div className="col-span-2 row-span-1 flex flex-col items-center justify-center gap-y-2 rounded-[2rem] bg-blue-50 bg-opacity-50 p-10">
+                <div className="mb-8 rounded-full bg-blue-100">
+                  <div className="flex h-16 w-16 items-center justify-center text-4xl text-blue-500">
+                    <BoltOutlined fontSize="inherit" />
+                  </div>
+                </div>
                 <h3 className="text-4xl !font-medium text-blue-500">
                   Grow an audience
                 </h3>

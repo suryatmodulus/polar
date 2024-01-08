@@ -3,11 +3,14 @@
 import {
   ArrowForward,
   BoltOutlined,
+  CodeOutlined,
   DiamondOutlined,
   FavoriteBorderOutlined,
   ViewDayOutlined,
+  VolunteerActivismOutlined,
 } from '@mui/icons-material'
 import { HTMLMotionProps, Variants, motion } from 'framer-motion'
+import Image from 'next/image'
 import NextLink, { LinkProps } from 'next/link'
 import { LogoIcon } from 'polarkit/components/brand'
 import { PropsWithChildren, useEffect, useRef } from 'react'
@@ -16,27 +19,40 @@ import { Gradient } from '../components/LandingPage/MeshGradient'
 
 const featureCards = [
   {
-    title: 'Subscriptions',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis lacus risus. Nulla facilisi.',
-    icon: <BoltOutlined fontSize="inherit" />,
-  },
-  {
-    title: 'Benefits',
-    description: '',
-    icon: <DiamondOutlined fontSize="inherit" />,
-  },
-  {
-    title: 'Posts',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis lacus risus. Nulla facilisi.',
+    title: 'Build a community',
+    description: 'with Posts',
+    wide: false,
     icon: <ViewDayOutlined fontSize="inherit" />,
   },
   {
-    title: 'Funding',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis lacus risus. Nulla facilisi.',
+    title: 'Earn money',
+    description: 'with Subscriptions',
+    wide: true,
+    icon: <BoltOutlined fontSize="inherit" />,
+  },
+  {
+    title: 'Empower your supporters',
+    description: 'with Benefits',
+    wide: true,
+    icon: <DiamondOutlined fontSize="inherit" />,
+  },
+  {
+    title: 'Accelerate',
+    description: 'with our JavaScript SDK',
+    wide: false,
+    icon: <CodeOutlined fontSize="inherit" />,
+  },
+  {
+    title: 'A better backlog',
+    description: 'with Issue Funding',
+    wide: false,
     icon: <FavoriteBorderOutlined fontSize="inherit" />,
+  },
+  {
+    title: 'Reward your community',
+    description: 'with Issue Rewards',
+    wide: true,
+    icon: <VolunteerActivismOutlined fontSize="inherit" />,
   },
 ]
 
@@ -104,29 +120,6 @@ const ClientPage = () => {
   return (
     <>
       <main className="flex flex-col bg-black text-white">
-        <motion.header
-          className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-center px-16 py-16"
-          variants={{
-            initial: { opacity: 0 },
-            animate: { opacity: 1, transition: { delay: 1.2, duration: 1 } },
-          }}
-          initial="initial"
-          animate="animate"
-        >
-          <div className="flex flex-row items-center justify-center gap-x-24">
-            <ul className="flex flex-row gap-x-16 text-xl font-light">
-              <Link href="#maintainer">Creator</Link>
-              <Link href="#backer">Supporter</Link>
-              <Link href="#community">Community</Link>
-              <NextLink
-                href="https://github.com/polarsource/polar"
-                target="_blank"
-              >
-                Open Source
-              </NextLink>
-            </ul>
-          </div>
-        </motion.header>
         <motion.section
           ref={ref}
           className="relative flex h-screen w-full flex-col justify-between p-16"
@@ -136,6 +129,29 @@ const ClientPage = () => {
             className="absolute inset-0 z-0 h-full w-full"
             data-transition-in
           />
+          <motion.header
+            className="relative mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-center px-16 pb-16"
+            variants={{
+              initial: { opacity: 0 },
+              animate: { opacity: 1, transition: { delay: 1.2, duration: 1 } },
+            }}
+            initial="initial"
+            animate="animate"
+          >
+            <div className="flex flex-row items-center justify-center gap-x-24">
+              <ul className="flex flex-row gap-x-16 text-xl">
+                <Link href="#create">Create</Link>
+                <Link href="#consume">Consume</Link>
+                <Link href="#community">Community</Link>
+                <NextLink
+                  href="https://github.com/polarsource/polar"
+                  target="_blank"
+                >
+                  Open Source
+                </NextLink>
+              </ul>
+            </div>
+          </motion.header>
           <motion.div
             className="relative mx-auto flex max-w-screen-2xl flex-grow flex-col items-center justify-center gap-y-16 lg:gap-y-24"
             variants={{
@@ -184,59 +200,56 @@ const ClientPage = () => {
             </motion.div>
           </motion.div>
         </motion.section>
-        <motion.section className="flex w-full flex-row justify-between gap-y-12 bg-white p-32 text-gray-950">
-          <div className="mx-auto flex max-w-screen-2xl flex-row justify-between gap-24">
-            <div className="flex flex-col gap-y-12">
-              <h1 className="text-6xl !font-medium leading-tight">
+        <motion.section
+          id="create"
+          className="flex w-full flex-row justify-between gap-y-12 bg-white p-32 text-gray-950"
+        >
+          <div className="mx-auto flex max-w-screen-xl flex-col justify-between gap-24">
+            <Image
+              className="rounded-3xl shadow-2xl"
+              alt="Creator"
+              src="/creator.png"
+              width={1200}
+              height={800}
+            />
+            <div className="flex flex-col items-center gap-12 text-center">
+              <h3 className="text-3xl font-semibold text-blue-500">
                 Create with Polar
+              </h3>
+              <h1 className="text-6xl !font-bold leading-snug text-gray-950">
+                Grow an audience
               </h1>
-              <p className="max-w-lg text-3xl leading-snug text-gray-600">
+              <p className="w-2/3 text-3xl leading-snug text-gray-500">
                 Distribute exclusive content & transform your coding passion
                 into a monthly income stream
               </p>
             </div>
             <div className="grid w-full grid-cols-3 gap-8">
-              <div className="row-span-1 flex flex-col gap-y-8 rounded-[2rem] bg-blue-50 bg-opacity-50 p-10">
-                <LogoIcon className="-ml-2 h-16 w-16 text-blue-500" />
-                <div className="flex flex-col gap-y-2">
-                  <h3 className="text-4xl !font-medium leading-tight text-blue-500">
-                    Grow an audience
-                    <br />
-                    <span className="text-4xl !font-medium text-gray-500">
-                      with Polar for Business
-                    </span>
-                  </h3>
-                </div>
-              </div>
-              <div className="col-span-2 row-span-1 flex flex-col items-center justify-center gap-y-2 rounded-[2rem] bg-blue-50 bg-opacity-50 p-10">
-                <div className="mb-8 rounded-full bg-blue-100">
-                  <div className="flex h-16 w-16 items-center justify-center text-4xl text-blue-500">
-                    <BoltOutlined fontSize="inherit" />
-                  </div>
-                </div>
-                <h3 className="text-4xl !font-medium text-blue-500">
-                  Grow an audience
-                </h3>
-                <h3 className="text-4xl !font-medium text-gray-500">
-                  with Subscriptions Tiers
-                </h3>
-              </div>
-
               {featureCards.map((card, i) => (
                 <div
                   key={i}
-                  className={`row-span-1 flex flex-col gap-y-8 rounded-[2rem] bg-blue-50 bg-opacity-50 p-10 ${
-                    i % 3 === 0 ? 'col-span-2' : ''
-                  }`}
+                  className={twMerge(
+                    'row-span-1 flex flex-col rounded-[3rem] bg-blue-50 p-12',
+                    card.wide
+                      ? 'col-span-2 items-center justify-center gap-y-2 text-center'
+                      : 'items-start gap-y-8',
+                  )}
                 >
-                  <div className="self-start rounded-full bg-blue-100">
-                    <div className="flex h-16 w-16 items-center justify-center text-3xl text-blue-500">
+                  <div className="mb-8 rounded-full bg-white">
+                    <div className="flex h-16 w-16 items-center justify-center text-4xl text-blue-500">
                       {card.icon}
                     </div>
                   </div>
-                  <div className="flex flex-col gap-y-4">
-                    <h3 className="text-4xl !font-medium">{card.title}</h3>
-                    <h3 className="text-4xl !font-medium text-gray-500">
+                  <div
+                    className={twMerge(
+                      'flex flex-col',
+                      card.wide ? 'gap-y-2' : 'gap-y-1',
+                    )}
+                  >
+                    <h3 className="text-4xl !font-medium text-blue-500">
+                      {card.title}
+                    </h3>
+                    <h3 className="text-4xl !font-medium text-gray-400">
                       {card.description}
                     </h3>
                   </div>

@@ -5,9 +5,7 @@ import {
   BoltOutlined,
   CodeOutlined,
   DiamondOutlined,
-  FavoriteBorderOutlined,
-  ViewDayOutlined,
-  VolunteerActivismOutlined,
+  LanguageOutlined,
 } from '@mui/icons-material'
 import { HTMLMotionProps, Variants, motion } from 'framer-motion'
 import Image from 'next/image'
@@ -19,10 +17,10 @@ import { Gradient } from '../components/LandingPage/MeshGradient'
 
 const featureCards = [
   {
-    title: 'Build a community',
+    title: 'Build communities',
     description: 'with Posts',
     wide: false,
-    icon: <ViewDayOutlined fontSize="inherit" />,
+    icon: <LanguageOutlined fontSize="inherit" />,
   },
   {
     title: 'Earn money',
@@ -41,18 +39,6 @@ const featureCards = [
     description: 'with our JavaScript SDK',
     wide: false,
     icon: <CodeOutlined fontSize="inherit" />,
-  },
-  {
-    title: 'A better backlog',
-    description: 'with Issue Funding',
-    wide: false,
-    icon: <FavoriteBorderOutlined fontSize="inherit" />,
-  },
-  {
-    title: 'Reward your community',
-    description: 'with Issue Rewards',
-    wide: true,
-    icon: <VolunteerActivismOutlined fontSize="inherit" />,
   },
 ]
 
@@ -202,17 +188,17 @@ const ClientPage = () => {
         </motion.section>
         <motion.section
           id="create"
-          className="flex w-full flex-row justify-between gap-y-12 bg-white p-32 text-gray-950"
+          className="flex w-full flex-row justify-between gap-y-12 bg-gray-100 p-32 text-gray-950"
         >
-          <div className="mx-auto flex max-w-screen-xl flex-col justify-between gap-24">
+          <div className="relative mx-auto flex max-w-screen-xl flex-col justify-between gap-24">
             <Image
-              className="rounded-3xl shadow-2xl"
+              className="w-full rounded-[2.5rem] shadow-2xl"
               alt="Creator"
-              src="/creator.png"
+              src="/tiers.png"
               width={1200}
               height={800}
             />
-            <div className="flex flex-col items-center gap-12 text-center">
+            <div className="flex flex-col items-center gap-8 text-center">
               <h3 className="text-3xl font-semibold text-blue-500">
                 Create with Polar
               </h3>
@@ -226,16 +212,17 @@ const ClientPage = () => {
             </div>
             <div className="grid w-full grid-cols-3 gap-8">
               {featureCards.map((card, i) => (
-                <div
+                <NextLink
                   key={i}
+                  href="#"
                   className={twMerge(
-                    'row-span-1 flex flex-col rounded-[3rem] bg-blue-50 p-12',
+                    'row-span-1 flex flex-col rounded-[3rem] border-4 border-white bg-white p-12 transition-colors duration-300 hover:border-blue-50',
                     card.wide
                       ? 'col-span-2 items-center justify-center gap-y-2 text-center'
                       : 'items-start gap-y-8',
                   )}
                 >
-                  <div className="mb-8 rounded-full bg-white">
+                  <div className="mb-8 rounded-full bg-blue-50">
                     <div className="flex h-16 w-16 items-center justify-center text-4xl text-blue-500">
                       {card.icon}
                     </div>
@@ -253,7 +240,7 @@ const ClientPage = () => {
                       {card.description}
                     </h3>
                   </div>
-                </div>
+                </NextLink>
               ))}
             </div>
           </div>

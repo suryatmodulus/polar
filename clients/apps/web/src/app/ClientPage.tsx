@@ -279,7 +279,7 @@ const ClientPage = () => {
                     visible: {
                       opacity: 1,
                       y: 0,
-                      transition: { duration: 1.5, ease: [0.65, 0, 0.35, 1] },
+                      transition: { duration: 2, ease: 'linear' },
                     },
                     hidden: {
                       opacity: 0,
@@ -319,7 +319,7 @@ const ClientPage = () => {
 
         <motion.section
           id="support"
-          className="flex w-full flex-row justify-between gap-y-12 bg-blue-50 p-32 text-gray-950"
+          className="flex w-full flex-row justify-between gap-y-12 bg-gradient-to-b from-blue-50 to-blue-400 p-32 text-gray-950"
         >
           <div className="relative mx-auto flex max-w-screen-xl flex-col justify-between gap-24">
             <div className="flex flex-col items-center gap-8 text-center">
@@ -329,7 +329,7 @@ const ClientPage = () => {
               <h1 className="text-6xl !font-bold leading-snug text-black">
                 Support your favorite creators
               </h1>
-              <p className="w-2/3 text-3xl leading-snug text-blue-300">
+              <p className="w-2/3 text-3xl leading-snug text-gray-500">
                 Distribute exclusive content & transform your coding passion
                 into a monthly income stream
               </p>
@@ -342,7 +342,7 @@ const ClientPage = () => {
                 visible: {
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 1, ease: [0.6, 0, 0.4, 1] },
+                  transition: { duration: 2, ease: 'linear' },
                 },
                 hidden: {
                   opacity: 0,

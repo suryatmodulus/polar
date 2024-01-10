@@ -242,7 +242,7 @@ const ClientPage = () => {
               </motion.p>
             </motion.div>
             <motion.img
-              className="w-full rounded-[2.5rem] shadow-2xl"
+              className="w-full rounded-[2.5rem] drop-shadow-2xl"
               src="/tiers.png"
               initial="hidden"
               variants={{
@@ -335,7 +335,7 @@ const ClientPage = () => {
               </p>
             </div>
             <motion.img
-              className="w-full rounded-[2.5rem] shadow-2xl"
+              className="w-full rounded-[2.5rem] drop-shadow-2xl"
               src="/tiers.png"
               initial="hidden"
               variants={{

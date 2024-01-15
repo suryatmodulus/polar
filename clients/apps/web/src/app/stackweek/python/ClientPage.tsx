@@ -101,6 +101,8 @@ const ClientPage = () => {
     gradient.initGradient('#gradient-canvas')
   }, [])
 
+  const circleRadius = 110
+
   return (
     <>
       <main className="flex flex-col bg-black text-white">
@@ -141,8 +143,8 @@ const ClientPage = () => {
           >
             <TextReveal>
               <div className="relative flex h-40 w-40 flex-col items-center justify-center rounded-full border-2 border-white">
-                <LogoIcon className="h-24 w-24" />
-                <div className="absolute inset-0 h-full w-full animate-spin fill-white font-semibold uppercase [animation-duration:14s]">
+                <LogoIcon className="h-20 w-20" />
+                <div className="absolute inset-0 h-full w-full animate-spin fill-white text-xl font-semibold uppercase tracking-wide [animation-duration:14s]">
                   <svg
                     x="0"
                     y="0"
@@ -153,18 +155,21 @@ const ClientPage = () => {
                     <defs>
                       <path
                         id="circlePath"
-                        d="
+                        d={`
           M 150, 150
-          m -120, 0
-          a 120,120 0 0,1 240,0
-          a 120,120 0 0,1 -240,0
-          "
+          m -${circleRadius}, 0
+          a ${circleRadius},${circleRadius} 0 0,1 ${circleRadius * 2},0
+          a ${circleRadius},${circleRadius} 0 0,1 -${circleRadius * 2},0
+          `}
                       />
                     </defs>
                     <g>
                       <text>
-                        <textPath xlinkHref="#circlePath" textLength={740}>
-                          Stack Week · Stack Week · Stack Week · Stack Week ·
+                        <textPath
+                          xlinkHref="#circlePath"
+                          textLength={110 * 6.1}
+                        >
+                          Stack Week · Stack Week · Stack Week ·
                         </textPath>
                       </text>
                     </g>

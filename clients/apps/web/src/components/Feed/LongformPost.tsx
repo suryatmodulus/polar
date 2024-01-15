@@ -80,19 +80,52 @@ export default function LongformPost({
     [publishedDate],
   )
 
+  const circleRadius = 100
+
   return (
     <StaggerReveal
       className="w-full max-w-2xl"
       transition={staggerTransition}
       variants={animationVariants}
     >
-      <div className="flex flex-col items-center gap-y-8 pb-16 pt-4">
+      <div className="flex flex-col items-center gap-y-12 pb-16 pt-4">
         <StaggerReveal.Child
           transition={revealTransition}
           variants={animationVariants}
         >
-          <LogoIcon className="text-blue-500 dark:text-blue-400" size={40} />
+          <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-full border-2 border-blue-500 dark:border-blue-400">
+            <LogoIcon className="h-12 w-12 text-blue-500 dark:text-blue-400" />
+            <div className="absolute inset-0 h-full w-full animate-spin fill-blue-500 text-xl font-semibold uppercase tracking-wide [animation-duration:14s] dark:fill-blue-400">
+              <svg
+                x="0"
+                y="0"
+                viewBox="0 0 300 300"
+                enable-background="new 0 0 300 300"
+                xmlSpace="preserve"
+              >
+                <defs>
+                  <path
+                    id="circlePath"
+                    d={`
+          M 150, 150
+          m -${circleRadius}, 0
+          a ${circleRadius},${circleRadius} 0 0,1 ${circleRadius * 2},0
+          a ${circleRadius},${circleRadius} 0 0,1 -${circleRadius * 2},0
+          `}
+                  />
+                </defs>
+                <g>
+                  <text>
+                    <textPath xlinkHref="#circlePath" textLength={110 * 5.5}>
+                      Stack Week · Stack Week · Stack Week ·
+                    </textPath>
+                  </text>
+                </g>
+              </svg>
+            </div>
+          </div>
         </StaggerReveal.Child>
+
         <StaggerReveal.Child
           transition={revealTransition}
           variants={animationVariants}

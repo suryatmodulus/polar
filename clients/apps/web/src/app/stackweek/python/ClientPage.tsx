@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  ArrowForward,
   BoltOutlined,
   CodeOutlined,
   DiamondOutlined,
@@ -12,7 +11,7 @@ import NextLink, { LinkProps } from 'next/link'
 import { LogoIcon } from 'polarkit/components/brand'
 import { PropsWithChildren, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Gradient } from '../components/LandingPage/MeshGradient'
+import { Gradient } from '../../../components/LandingPage/MeshGradient'
 
 const featureCards = [
   {
@@ -115,7 +114,7 @@ const ClientPage = () => {
             data-transition-in
           />
           <motion.header
-            className="relative mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-center px-16 pb-16"
+            className="fixed left-0 right-0 top-16 mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-center px-16 pb-16"
             variants={{
               initial: { opacity: 0 },
               animate: { opacity: 1, transition: { delay: 1.2, duration: 1 } },
@@ -125,196 +124,65 @@ const ClientPage = () => {
           >
             <div className="flex flex-row items-center justify-center gap-x-24">
               <ul className="flex flex-row gap-x-16 text-xl">
-                <Link href="#create">Create</Link>
-                <Link href="#consume">Consume</Link>
+                <Link href="#create">Topics</Link>
+                <Link href="#consume">Authors</Link>
                 <Link href="#community">Community</Link>
-                <NextLink
-                  href="https://github.com/polarsource/polar"
-                  target="_blank"
-                >
-                  Open Source
-                </NextLink>
               </ul>
             </div>
           </motion.header>
           <motion.div
-            className="relative mx-auto flex max-w-screen-2xl flex-grow flex-col items-center justify-center gap-y-16 lg:gap-y-24"
+            className="relative mx-auto mt-24 flex max-w-screen-2xl flex-grow flex-col items-center justify-center gap-y-16 lg:gap-y-20"
             variants={{
               initial: { opacity: 1 },
-              animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
+              animate: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
             initial="initial"
             animate="animate"
           >
             <TextReveal>
-              <LogoIcon className="h-24 w-24" />{' '}
+              <div className="relative flex h-40 w-40 flex-col items-center justify-center rounded-full border-2 border-white">
+                <LogoIcon className="h-24 w-24" />
+                <div className="absolute inset-0 h-full w-full animate-spin fill-white font-semibold uppercase [animation-duration:14s]">
+                  <svg
+                    x="0"
+                    y="0"
+                    viewBox="0 0 300 300"
+                    enable-background="new 0 0 300 300"
+                    xmlSpace="preserve"
+                  >
+                    <defs>
+                      <path
+                        id="circlePath"
+                        d="
+          M 150, 150
+          m -120, 0
+          a 120,120 0 0,1 240,0
+          a 120,120 0 0,1 -240,0
+          "
+                      />
+                    </defs>
+                    <g>
+                      <text>
+                        <textPath xlinkHref="#circlePath" textLength={740}>
+                          Stack Week · Stack Week · Stack Week · Stack Week ·
+                        </textPath>
+                      </text>
+                    </g>
+                  </svg>
+                </div>
+              </div>
             </TextReveal>
-            <h1 className="text-center text-5xl leading-snug tracking-tight lg:text-[calc(100vw_/_20)]">
-              <TextReveal>
-                A creator platform for
-                <br className="hidden lg:block" />
-              </TextReveal>
-              <TextReveal>Developers</TextReveal>
+            <h1 className="text-center text-5xl !font-medium leading-snug tracking-tight lg:text-[calc(100vw_/_20)]">
+              <TextReveal>Python</TextReveal>
             </h1>
             <TextReveal>
-              <p className="text-xl font-light md:text-3xl">
-                Turn your coding endeavors into a sustainable income
+              <p className="text-center text-xl font-light !leading-normal md:text-3xl">
+                Python developers, engineers, and enthusiasts
+                <br />
+                share their knowledge and projects.
               </p>
             </TextReveal>
-            <motion.div
-              className="flex flex-row items-center gap-x-12"
-              variants={{
-                initial: { opacity: 0 },
-                animate: {
-                  opacity: 1,
-                  transition: { duration: 1, delay: 1.5 },
-                },
-              }}
-            >
-              <button className="flex flex-row items-center gap-x-4 whitespace-nowrap rounded-full bg-blue-500 px-8 py-4 font-light text-white shadow-sm transition-colors duration-300 hover:bg-white hover:text-blue-500 md:text-xl">
-                <span>Create with Polar</span>
-                <ArrowForward />
-              </button>
-
-              <Link
-                className="flex flex-row items-center gap-x-4 whitespace-nowrap bg-transparent py-4 font-light md:text-xl"
-                href="https://github.com/polarsource/polar"
-              >
-                <span>Sign In</span>
-              </Link>
-            </motion.div>
           </motion.div>
-        </motion.section>
-        <motion.section
-          id="create"
-          className="flex w-full flex-row justify-between gap-y-12 bg-gray-100 p-32 text-gray-950"
-        >
-          <div className="relative mx-auto flex max-w-screen-xl flex-col justify-between gap-24">
-            <motion.div
-              className="flex flex-col items-center gap-8 text-center"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ staggerChildren: 0.2 }}
-            >
-              <motion.h3
-                className="text-3xl font-semibold text-blue-500"
-                variants={{
-                  visible: {
-                    opacity: 1,
-                    transition: { duration: 1.5 },
-                  },
-                  hidden: {
-                    opacity: 0,
-                  },
-                }}
-              >
-                Create with Polar
-              </motion.h3>
-              <motion.h1
-                className="text-6xl !font-bold leading-snug text-gray-950"
-                variants={{
-                  visible: {
-                    opacity: 1,
-                    transition: { duration: 1.5 },
-                  },
-                  hidden: {
-                    opacity: 0,
-                  },
-                }}
-              >
-                Grow an audience
-              </motion.h1>
-              <motion.p
-                className="w-2/3 text-3xl leading-snug text-gray-500"
-                variants={{
-                  visible: {
-                    opacity: 1,
-                    transition: { duration: 1.5 },
-                  },
-                  hidden: {
-                    opacity: 0,
-                  },
-                }}
-              >
-                Distribute exclusive content & transform your coding passion
-                into a monthly income stream
-              </motion.p>
-            </motion.div>
-            <motion.img
-              className="w-full rounded-[2.5rem] drop-shadow-2xl"
-              src="/tiers.png"
-              initial="hidden"
-              variants={{
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 1,
-                    ease: [0.6, 0, 0.4, 1],
-                    delay: 0.4,
-                  },
-                },
-                hidden: {
-                  opacity: 0,
-                  y: 50,
-                },
-              }}
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ staggerChildren: 0.06 }}
-            />
-            <motion.div
-              className="grid w-full grid-cols-3 gap-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ staggerChildren: 0.08 }}
-            >
-              {featureCards.map((card, i) => (
-                <motion.a
-                  key={i}
-                  href="#"
-                  variants={{
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 2, ease: 'linear' },
-                    },
-                    hidden: {
-                      opacity: 0,
-                      y: 100,
-                    },
-                  }}
-                  className={twMerge(
-                    'row-span-1 flex flex-col rounded-[3rem] border-4 border-white bg-white p-12 transition-colors duration-300 hover:border-gray-200',
-                    card.wide
-                      ? 'col-span-2 items-center justify-center gap-y-2 text-center'
-                      : 'items-start gap-y-8',
-                  )}
-                >
-                  <div className="mb-8 rounded-full bg-blue-50">
-                    <div className="flex h-16 w-16 items-center justify-center text-4xl text-blue-500">
-                      {card.icon}
-                    </div>
-                  </div>
-                  <div
-                    className={twMerge(
-                      'flex flex-col',
-                      card.wide ? 'gap-y-2' : 'gap-y-1',
-                    )}
-                  >
-                    <h3 className="text-4xl !font-medium text-blue-500">
-                      {card.title}
-                    </h3>
-                    <h3 className="text-4xl !font-medium text-gray-400">
-                      {card.description}
-                    </h3>
-                  </div>
-                </motion.a>
-              ))}
-            </motion.div>
-          </div>
         </motion.section>
 
         <motion.section
@@ -452,7 +320,7 @@ const variants: Variants = {
     y: '0%',
     transition: {
       duration: 1.5,
-      ease: [0.87, 0, 0.13, 1],
+      ease: [0.75, 0, 0.25, 1],
     },
   },
 }

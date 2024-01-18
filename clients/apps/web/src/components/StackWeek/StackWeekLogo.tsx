@@ -22,7 +22,7 @@ export const StackWeekLogo = ({ radius, animate }: StackWeekLogoProps) => {
       <div
         className={twMerge(
           'absolute inset-0 h-full w-full fill-white font-semibold uppercase tracking-wide',
-          animate ? 'animate-spin [animation-duration:20s]' : '',
+          animate ? 'animate-spin [animation-duration:24s]' : '',
         )}
         style={{ fontSize: radius * 0.12 }}
       >

@@ -1,44 +1,11 @@
 'use client'
 
-import {
-  BoltOutlined,
-  CodeOutlined,
-  DiamondOutlined,
-  LanguageOutlined,
-} from '@mui/icons-material'
+import { StackWeekLogo } from '@/components/StackWeek/StackWeekLogo'
 import { HTMLMotionProps, Variants, motion } from 'framer-motion'
 import NextLink, { LinkProps } from 'next/link'
-import { LogoIcon } from 'polarkit/components/brand'
 import { PropsWithChildren, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Gradient } from '../../../components/LandingPage/MeshGradient'
-
-const featureCards = [
-  {
-    title: 'Build communities',
-    description: 'with Posts',
-    wide: false,
-    icon: <LanguageOutlined fontSize="inherit" />,
-  },
-  {
-    title: 'Earn money',
-    description: 'with Subscriptions',
-    wide: true,
-    icon: <BoltOutlined fontSize="inherit" />,
-  },
-  {
-    title: 'Empower your supporters',
-    description: 'with Benefits',
-    wide: true,
-    icon: <DiamondOutlined fontSize="inherit" />,
-  },
-  {
-    title: 'Accelerate',
-    description: 'with our JavaScript SDK',
-    wide: false,
-    icon: <CodeOutlined fontSize="inherit" />,
-  },
-]
 
 const Link = ({
   children,
@@ -101,8 +68,6 @@ const ClientPage = () => {
     gradient.initGradient('#gradient-canvas')
   }, [])
 
-  const circleRadius = 110
-
   return (
     <>
       <main className="flex flex-col bg-black text-white">
@@ -115,76 +80,27 @@ const ClientPage = () => {
             className="absolute inset-0 z-0 h-full w-full"
             data-transition-in
           />
-          <motion.header
-            className="fixed left-0 right-0 top-16 mx-auto flex w-full max-w-screen-2xl flex-row items-center justify-center px-16 pb-16"
-            variants={{
-              initial: { opacity: 0 },
-              animate: { opacity: 1, transition: { delay: 1.2, duration: 1 } },
-            }}
-            initial="initial"
-            animate="animate"
-          >
-            <div className="flex flex-row items-center justify-center gap-x-24">
-              <ul className="flex flex-row gap-x-16 text-xl">
-                <Link href="#create">Topics</Link>
-                <Link href="#consume">Authors</Link>
-                <Link href="#community">Community</Link>
-              </ul>
-            </div>
-          </motion.header>
           <motion.div
-            className="relative mx-auto mt-24 flex max-w-screen-2xl flex-grow flex-col items-center justify-center gap-y-16 lg:gap-y-20"
+            className="relative mx-auto flex max-w-screen-2xl flex-grow flex-col items-center justify-center gap-y-16 lg:gap-y-32"
             variants={{
               initial: { opacity: 1 },
-              animate: { opacity: 1, transition: { staggerChildren: 0.1 } },
+              animate: { opacity: 1, transition: { staggerChildren: 0.5 } },
             }}
             initial="initial"
             animate="animate"
           >
             <TextReveal>
-              <div className="relative flex h-40 w-40 flex-col items-center justify-center rounded-full border-2 border-white">
-                <LogoIcon className="h-20 w-20" />
-                <div className="absolute inset-0 h-full w-full animate-spin fill-white text-xl font-semibold uppercase tracking-wide [animation-duration:14s]">
-                  <svg
-                    x="0"
-                    y="0"
-                    viewBox="0 0 300 300"
-                    enable-background="new 0 0 300 300"
-                    xmlSpace="preserve"
-                  >
-                    <defs>
-                      <path
-                        id="circlePath"
-                        d={`
-          M 150, 150
-          m -${circleRadius}, 0
-          a ${circleRadius},${circleRadius} 0 0,1 ${circleRadius * 2},0
-          a ${circleRadius},${circleRadius} 0 0,1 -${circleRadius * 2},0
-          `}
-                      />
-                    </defs>
-                    <g>
-                      <text>
-                        <textPath
-                          xlinkHref="#circlePath"
-                          textLength={110 * 6.1}
-                        >
-                          Stack Week · Stack Week · Stack Week ·
-                        </textPath>
-                      </text>
-                    </g>
-                  </svg>
-                </div>
-              </div>
+              <StackWeekLogo radius={200} animate />
             </TextReveal>
             <h1 className="text-center text-5xl !font-medium leading-snug tracking-tight lg:text-[calc(100vw_/_20)]">
-              <TextReveal>Python</TextReveal>
+              <TextReveal className="[text-wrap:balance]">
+                Artificial Intelligence & Python
+              </TextReveal>
             </h1>
             <TextReveal>
-              <p className="text-center text-xl font-light !leading-normal md:text-3xl">
-                Python developers, engineers, and enthusiasts
-                <br />
-                share their knowledge and projects.
+              <p className="max-w-2xl text-center text-xl font-light !leading-normal [text-wrap:pretty] md:text-3xl">
+                Celebrating a new generation of APIs for LLM models & modern web
+                applications
               </p>
             </TextReveal>
           </motion.div>
@@ -319,13 +235,12 @@ const FooterLink = (props: PropsWithChildren<LinkProps>) => {
 
 const variants: Variants = {
   initial: {
-    y: '100%',
+    opacity: 0,
   },
   animate: {
-    y: '0%',
+    opacity: 1,
     transition: {
       duration: 1.5,
-      ease: [0.75, 0, 0.25, 1],
     },
   },
 }

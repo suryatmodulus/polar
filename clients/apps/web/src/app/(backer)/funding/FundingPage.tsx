@@ -44,7 +44,7 @@ const FundingPage = () => {
   )
 
   const dashboard = dashboardQuery.data
-  const totalCount = dashboard?.pages[0].pagination.total_count ?? undefined
+  const totalCount = dashboard?.pages[0]?.pagination.total_count ?? undefined
 
   const rewards = useListRewardsToUser(currentUser?.id)
   const { data: account } = useAccount(currentUser?.account_id)

@@ -30,14 +30,12 @@ const ClientPage = ({
   organization,
   repository,
   issuesFunding,
-  totalIssueCount,
   articles,
   pinnedArticles,
 }: {
   organization: Organization
   repository: Repository
   issuesFunding: ListResourceIssueFunding
-  totalIssueCount: number
   articles: ListResourceArticle
   pinnedArticles: ListResourceArticle
 }) => {
@@ -56,7 +54,7 @@ const ClientPage = ({
 
   return (
     <Tabs defaultValue="overview">
-      <div className="flex flex-col gap-y-16">
+      <div className="flex flex-col gap-y-12">
         <div className="flex flex-row items-center gap-x-10">
           <h1 className="flex flex-row items-baseline gap-x-4 text-2xl !font-normal">
             <span className="dark:text-polar-600 text-gray-400">
@@ -94,11 +92,13 @@ const ClientPage = ({
           <div className="flex flex-col gap-y-16">
             <div className="flex w-full max-w-4xl flex-col gap-y-16">
               {repository.description && (
-                <p className="dark:text-polar-50 text-5xl !font-normal leading-snug text-gray-950">
-                  {repository.description}
-                </p>
+                <>
+                  <p className="dark:text-polar-50 text-5xl !font-normal leading-normal text-gray-950">
+                    {repository.description}
+                  </p>
+                  <Separator className="h-1 w-16 bg-black dark:bg-white" />
+                </>
               )}
-              <Separator className="h-1 w-16 bg-black dark:bg-white" />
               <div className="flex flex-row gap-x-32">
                 <div className="flex flex-col gap-y-1">
                   <span className="dark:text-polar-300 text-gray-500">
@@ -148,20 +148,10 @@ const ClientPage = ({
             </div>
 
             <div className="flex flex-row gap-x-24">
-              <div className="flex max-w-4xl flex-col gap-y-16">
-                <img
-                  className="rounded-3xl shadow-2xl dark:shadow-none"
-                  src="https://res.cloudinary.com/read-cv/image/upload/c_limit,h_2048,w_2048/v1/1/profileItems/2Vsd5ZTtWrTba9h5GeSbJqySWWJ2/newProfileItem/3317a7d1-451d-42ec-aaae-a5a53f00a26d.png?_a=DATC1RAAZAA0"
-                />
-
-                <div className="dark:bg-polar-900 dark:border-polar-800 flex flex-col gap-y-8 rounded-3xl border border-gray-100 bg-white p-12 shadow-sm">
-                  <div className="dark:text-polar-500 font-mono text-sm">
-                    README.md
-                  </div>
-                  <Markdown className="prose dark:prose-invert dark:prose-a:text-blue-400 prose-a:text-blue-500 prose-a:no-underline prose-img:rounded-3xl prose-headings:leading-normal prose-headings:font-normal dark:text-polar-200 w-full max-w-full font-normal leading-relaxed">
-                    {MARKDOWN_EXAMPLE}
-                  </Markdown>
-                </div>
+              <div className="dark:bg-polar-900 dark:border-polar-800 flex max-w-4xl flex-col rounded-[3rem] border border-gray-100 bg-white p-12 shadow-sm">
+                <Markdown className="prose dark:prose-invert dark:prose-a:text-blue-400 prose-a:text-blue-500 prose-a:no-underline prose-img:rounded-3xl prose-headings:leading-normal prose-headings:font-normal dark:text-polar-200 w-full max-w-full font-normal leading-relaxed tracking-[0.5px]">
+                  {MARKDOWN_EXAMPLE}
+                </Markdown>
               </div>
               <Sidebar />
             </div>
@@ -263,7 +253,9 @@ const Sidebar = () => {
   )
 }
 
-const MARKDOWN_EXAMPLE = `# Illa genus
+const MARKDOWN_EXAMPLE = `![image.jpg](https://res.cloudinary.com/read-cv/image/upload/c_limit,h_2048,w_2048/v1/1/profileItems/2Vsd5ZTtWrTba9h5GeSbJqySWWJ2/newProfileItem/3317a7d1-451d-42ec-aaae-a5a53f00a26d.png?_a=DATC1RAAZAA0)
+
+# Illa genus
 
 ## Suasit talia dispar pater gentes
 

@@ -105,61 +105,47 @@ export default async function Page({
   const api = getServerSideAPI()
   const filters = buildFundingFilters(urlSearchFromObj(searchParams))
 
-  const [
-    repositories,
-    issuesFunding,
-    noFilterSearch,
-    articles,
-    pinnedArticles,
-  ] = await Promise.all([
-    api.repositories.search(
-      {
-        platform: Platforms.GITHUB,
-        organizationName: params.organization,
-        repositoryName: params.repo,
-      },
-      cacheConfig,
-    ),
-    api.funding.search(
-      {
-        platform: Platforms.GITHUB,
-        organizationName: params.organization,
-        repositoryName: params.repo,
-        query: filters.q,
-        sorting: filters.sort,
-        badged: filters.badged,
-        limit: 20,
-        closed: filters.closed,
-        page: searchParams.page ? parseInt(searchParams.page) : 1,
-      },
-      cacheConfig,
-    ),
-    api.funding.search(
-      {
-        platform: Platforms.GITHUB,
-        organizationName: params.organization,
-        repositoryName: params.repo,
-        limit: 20,
-      },
-      cacheConfig,
-    ),
-    api.articles.search(
-      {
-        platform: Platforms.GITHUB,
-        organizationName: params.organization,
-        isPinned: false,
-      },
-      cacheConfig,
-    ),
-    api.articles.search(
-      {
-        platform: Platforms.GITHUB,
-        organizationName: params.organization,
-        isPinned: true,
-      },
-      cacheConfig,
-    ),
-  ])
+  const [repositories, issuesFunding, articles, pinnedArticles] =
+    await Promise.all([
+      api.repositories.search(
+        {
+          platform: Platforms.GITHUB,
+          organizationName: params.organization,
+          repositoryName: params.repo,
+        },
+        cacheConfig,
+      ),
+      api.funding.search(
+        {
+          platform: Platforms.GITHUB,
+          organizationName: params.organization,
+          repositoryName: params.repo,
+          query: filters.q,
+          sorting: filters.sort,
+          badged: filters.badged,
+          limit: 20,
+          closed: filters.closed,
+          page: searchParams.page ? parseInt(searchParams.page) : 1,
+        },
+        cacheConfig,
+      ),
+      api.articles.search(
+        {
+          platform: Platforms.GITHUB,
+          organizationName: params.organization,
+          isPinned: false,
+        },
+        cacheConfig,
+      ),
+      api.articles.search(
+        {
+          platform: Platforms.GITHUB,
+          organizationName: params.organization,
+          isPinned: true,
+        },
+        cacheConfig,
+      ),
+    ])
 
   if (repositories === undefined) {
     return <PageNotFound />
@@ -176,7 +162,6 @@ export default async function Page({
       organization={repo.organization}
       repository={repo}
       issuesFunding={issuesFunding}
-      totalIssueCount={noFilterSearch.pagination.total_count}
       articles={articles}
       pinnedArticles={pinnedArticles}
     />

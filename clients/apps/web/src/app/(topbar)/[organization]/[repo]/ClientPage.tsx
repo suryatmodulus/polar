@@ -36,13 +36,18 @@ const ClientPage = ({
   return (
     <div className="flex flex-col gap-y-24 py-12">
       <div className="flex w-full max-w-4xl flex-col gap-y-16">
-        <h1 className="flex flex-row items-baseline gap-x-4 text-2xl !font-normal">
-          <span className="dark:text-polar-600 text-gray-400">
-            {repository.organization.name}
-          </span>
-          <span className="dark:text-polar-600 text-gray-400">/</span>
-          <span>{repository.name}</span>
-        </h1>
+        <div className="flex flex-row items-center gap-x-10">
+          <h1 className="flex flex-row items-baseline gap-x-4 text-2xl !font-normal">
+            <span className="dark:text-polar-600 text-gray-400">
+              {repository.organization.name}
+            </span>
+            <span className="dark:text-polar-600 text-gray-400">/</span>
+            <span>{repository.name}</span>
+          </h1>
+          <div className="flex flex-row rounded-full bg-gradient-to-r from-blue-300 to-blue-950 px-3 py-1.5 text-xs text-white">
+            Staff Pick
+          </div>
+        </div>
         {repository.description && (
           <p className="dark:text-polar-50 text-5xl !font-normal leading-snug text-gray-950">
             {repository.description}

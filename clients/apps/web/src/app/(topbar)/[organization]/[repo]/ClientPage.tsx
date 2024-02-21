@@ -36,7 +36,13 @@ const ClientPage = ({
   return (
     <div className="flex flex-col gap-y-24 py-12">
       <div className="flex w-full max-w-4xl flex-col gap-y-16">
-        <h1 className="text-2xl !font-normal">{repository.name}</h1>
+        <h1 className="flex flex-row items-baseline gap-x-4 text-2xl !font-normal">
+          <span className="dark:text-polar-600 text-gray-400">
+            {repository.organization.name}
+          </span>
+          <span className="dark:text-polar-600 text-gray-400">/</span>
+          <span>{repository.name}</span>
+        </h1>
         {repository.description && (
           <p className="dark:text-polar-50 text-5xl !font-normal leading-snug text-gray-950">
             {repository.description}
@@ -219,7 +225,7 @@ alteraque stabat populusque confudit equi.`}</Markdown>
             <div className="flex flex-col gap-y-4">
               <p className="dark:text-polar-300 text-gray-500">
                 This repository doesn't have any contributors yet. Want to help
-                out? Check out the issues.
+                out?
               </p>
               <Link
                 href={`#`}

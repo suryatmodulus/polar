@@ -1,7 +1,12 @@
+'use client'
+
+import { Post } from '@/components/Feed/Posts/Post'
 import IssuesLookingForFunding from '@/components/Organization/IssuesLookingForFunding'
 import { ArrowUpRightIcon } from '@heroicons/react/20/solid'
-import { ArrowForwardOutlined } from '@mui/icons-material'
+import { ArrowForwardOutlined, ViewDayOutlined } from '@mui/icons-material'
 import {
+  Article,
+  ListResourceArticle,
   ListResourceIssueFunding,
   Organization,
   Repository,
@@ -17,25 +22,41 @@ import {
   TabsTrigger,
 } from 'polarkit/components/ui/atoms'
 import { Separator } from 'polarkit/components/ui/separator'
+import { useSearchArticles } from 'polarkit/hooks'
 import { Fragment } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 const ClientPage = ({
   organization,
   repository,
   issuesFunding,
   totalIssueCount,
+  articles,
+  pinnedArticles,
 }: {
   organization: Organization
   repository: Repository
   issuesFunding: ListResourceIssueFunding
   totalIssueCount: number
+  articles: ListResourceArticle
+  pinnedArticles: ListResourceArticle
 }) => {
+  const [inViewRef] = useInView()
+  const posts = useSearchArticles(organization.name, false)
+  const infinitePosts =
+    posts.data?.pages
+      .flatMap((page) => page.items)
+      .filter((item): item is Article => Boolean(item)) ??
+    // Fallback to server side loaded articles
+    articles.items ??
+    []
+
   const tabsTriggerClassName =
     'data-[state=active]:rounded-full data-[state=active]:bg-blue-50 data-[state=active]:text-blue-500 dark:data-[state=active]:bg-blue-950 hover:text-blue-500 dark:data-[state=active]:text-blue-300 data-[state=active]:shadow-none'
 
   return (
-    <div className="flex flex-col gap-y-24 py-12">
-      <div className="flex w-full max-w-4xl flex-col gap-y-16">
+    <Tabs defaultValue="overview">
+      <div className="flex flex-col gap-y-16">
         <div className="flex flex-row items-center gap-x-10">
           <h1 className="flex flex-row items-baseline gap-x-4 text-2xl !font-normal">
             <span className="dark:text-polar-600 text-gray-400">
@@ -48,95 +69,201 @@ const ClientPage = ({
             Staff Pick
           </div>
         </div>
-        {repository.description && (
-          <p className="dark:text-polar-50 text-5xl !font-normal leading-snug text-gray-950">
-            {repository.description}
-          </p>
-        )}
-        <Separator className="h-1 w-16 bg-black dark:bg-white" />
-        <div className="flex flex-row gap-x-32">
-          <div className="flex flex-col gap-y-1">
-            <span className="dark:text-polar-300 text-gray-500">Creator</span>
-            <Link href={`/${repository.organization.name}`}>
-              {repository.organization.pretty_name}
-            </Link>
-          </div>
-          <div className="flex flex-col gap-y-1">
-            <span className="dark:text-polar-300 text-gray-500">Stars</span>
-            <span>{repository.stars}</span>
-          </div>
-          <div className="flex flex-col gap-y-1">
-            <span className="dark:text-polar-300 text-gray-500">
-              Repository
-            </span>
-            <Link
-              className="flex flex-row items-center gap-x-2"
-              href={`https://github.com/${repository.organization.name}/${repository.name}`}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {'GitHub'}
-              <ArrowUpRightIcon className="h-5 w-5" />
-            </Link>
-          </div>
-          {repository.homepage && (
-            <div className="flex flex-col gap-y-1">
-              <span className="dark:text-polar-300 text-gray-500">Website</span>
-              <Link
-                className="flex flex-row items-center gap-x-2"
-                href={repository.homepage ?? '#'}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {new URL(repository.homepage).hostname}
-                <ArrowUpRightIcon className="h-5 w-5" />
-              </Link>
+        <TabsList
+          className={
+            'flex bg-transparent ring-0 dark:bg-transparent dark:ring-0'
+          }
+        >
+          <TabsTrigger className={tabsTriggerClassName} value="overview">
+            Overview
+          </TabsTrigger>
+          <TabsTrigger className={tabsTriggerClassName} value="posts">
+            Posts
+          </TabsTrigger>
+          <TabsTrigger className={tabsTriggerClassName} value="subscriptions">
+            Subscriptions
+          </TabsTrigger>
+          <TabsTrigger className={tabsTriggerClassName} value="documentation">
+            Documentation
+          </TabsTrigger>
+          <TabsTrigger className={tabsTriggerClassName} value="issues">
+            Fundable Issues
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview">
+          <div className="flex flex-col gap-y-16">
+            <div className="flex w-full max-w-4xl flex-col gap-y-16">
+              {repository.description && (
+                <p className="dark:text-polar-50 text-5xl !font-normal leading-snug text-gray-950">
+                  {repository.description}
+                </p>
+              )}
+              <Separator className="h-1 w-16 bg-black dark:bg-white" />
+              <div className="flex flex-row gap-x-32">
+                <div className="flex flex-col gap-y-1">
+                  <span className="dark:text-polar-300 text-gray-500">
+                    Creator
+                  </span>
+                  <Link href={`/${repository.organization.name}`}>
+                    {repository.organization.pretty_name}
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-y-1">
+                  <span className="dark:text-polar-300 text-gray-500">
+                    Stars
+                  </span>
+                  <span>{repository.stars}</span>
+                </div>
+                <div className="flex flex-col gap-y-1">
+                  <span className="dark:text-polar-300 text-gray-500">
+                    Repository
+                  </span>
+                  <Link
+                    className="flex flex-row items-center gap-x-2"
+                    href={`https://github.com/${repository.organization.name}/${repository.name}`}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {'GitHub'}
+                    <ArrowUpRightIcon className="h-5 w-5" />
+                  </Link>
+                </div>
+                {repository.homepage && (
+                  <div className="flex flex-col gap-y-1">
+                    <span className="dark:text-polar-300 text-gray-500">
+                      Website
+                    </span>
+                    <Link
+                      className="flex flex-row items-center gap-x-2"
+                      href={repository.homepage ?? '#'}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {new URL(repository.homepage).hostname}
+                      <ArrowUpRightIcon className="h-5 w-5" />
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+
+            <div className="flex flex-row gap-x-24">
+              <div className="flex max-w-4xl flex-col gap-y-16">
+                <img
+                  className="rounded-3xl shadow-2xl dark:shadow-none"
+                  src="https://res.cloudinary.com/read-cv/image/upload/c_limit,h_2048,w_2048/v1/1/profileItems/2Vsd5ZTtWrTba9h5GeSbJqySWWJ2/newProfileItem/3317a7d1-451d-42ec-aaae-a5a53f00a26d.png?_a=DATC1RAAZAA0"
+                />
+
+                <div className="dark:bg-polar-900 dark:border-polar-800 flex flex-col gap-y-8 rounded-3xl border border-gray-100 bg-white p-12 shadow-sm">
+                  <div className="dark:text-polar-500 font-mono text-sm">
+                    README.md
+                  </div>
+                  <Markdown className="prose dark:prose-invert dark:prose-a:text-blue-400 prose-a:text-blue-500 prose-a:no-underline prose-img:rounded-3xl prose-headings:leading-normal prose-headings:font-normal dark:text-polar-200 w-full max-w-full font-normal leading-relaxed">
+                    {MARKDOWN_EXAMPLE}
+                  </Markdown>
+                </div>
+              </div>
+              <Sidebar />
+            </div>
+          </div>
+        </TabsContent>
+        <TabsContent value="posts">
+          <div className="flex w-full max-w-2xl flex-col gap-y-12">
+            {(pinnedArticles.items?.length ?? 0) > 0 ? (
+              <>
+                <div className="flex w-full flex-col gap-y-6">
+                  {pinnedArticles.items?.map((post) => (
+                    <Post article={post} key={post.id} highlightPinned />
+                  ))}
+                </div>
+                <Separator className="dark:bg-polar-800 bg-gray-100" />
+              </>
+            ) : null}
+
+            {infinitePosts.length > 0 ? (
+              <div className="flex w-full flex-col gap-y-6">
+                {infinitePosts.map((post) => (
+                  <Post article={post} key={post.id} />
+                ))}
+                <div ref={inViewRef} />
+              </div>
+            ) : (
+              <>
+                {posts.isFetched && infinitePosts.length === 0 ? (
+                  <div className="dark:text-polar-400 flex h-full w-full flex-col items-center gap-y-4 pt-32 text-gray-600">
+                    <ViewDayOutlined fontSize="large" />
+                    <div className="flex w-full flex-col items-center gap-y-2 px-12 text-center">
+                      <h3 className="p-2 text-lg font-medium">
+                        {organization.name} is typing...
+                      </h3>
+                      <p className="dark:text-polar-500 w-full min-w-0 text-gray-500">
+                        Subscribe to {organization.name} to get future posts
+                        fresh out of the press.
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
+              </>
+            )}
+          </div>
+        </TabsContent>
+        <TabsContent className="py-6" value="issues">
+          <ShadowBoxOnMd>
+            <div className="p-4">
+              <IssuesLookingForFunding
+                organization={organization}
+                repository={repository}
+                issues={issuesFunding}
+              />
+            </div>
+          </ShadowBoxOnMd>
+        </TabsContent>
+      </div>
+    </Tabs>
+  )
+}
+
+export default ClientPage
+
+const Sidebar = () => {
+  return (
+    <div className="sticky top-32 flex h-full flex-col gap-y-12">
+      <div className="flex flex-col gap-y-6">
+        <h2 className="text-xl !font-normal">Subscribers</h2>
+        <div className="flex flex-row flex-wrap gap-3">
+          {new Array(9).fill(0).map((_, idx) => (
+            <Fragment key={idx}>
+              <Avatar className="h-10 w-10" name={'Hello'} avatar_url="" />
+            </Fragment>
+          ))}
+          {
+            <div className="dark:border-polar-700 dark:bg-polar-900 dark:text-polar-400 flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-50 text-xs font-medium text-blue-400 dark:border-2">
+              +98
+            </div>
+          }
         </div>
       </div>
 
-      <div className="relative flex w-full flex-row gap-x-24">
-        <div className="flex max-w-4xl flex-col gap-y-32">
-          <img
-            className="rounded-3xl shadow-2xl dark:shadow-none"
-            src="https://res.cloudinary.com/read-cv/image/upload/c_limit,h_2048,w_2048/v1/1/profileItems/2Vsd5ZTtWrTba9h5GeSbJqySWWJ2/newProfileItem/3317a7d1-451d-42ec-aaae-a5a53f00a26d.png?_a=DATC1RAAZAA0"
-          />
+      <div className="flex flex-col gap-y-6">
+        <h2 className="text-xl !font-normal">Contributors</h2>
+        <div className="flex flex-col gap-y-4">
+          <p className="dark:text-polar-300 text-gray-500">
+            This repository doesn't have any contributors yet. Want to help out?
+          </p>
+          <Link
+            href={`#`}
+            className="flex flex-row items-center gap-x-2 text-sm text-blue-500 dark:text-blue-400"
+          >
+            <span>Check out the issues</span>
+            <ArrowForwardOutlined className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
 
-          <Tabs defaultValue="readme">
-            <TabsList
-              className={
-                'flex bg-transparent ring-0 dark:bg-transparent dark:ring-0'
-              }
-            >
-              <TabsTrigger className={tabsTriggerClassName} value="readme">
-                README
-              </TabsTrigger>
-              <TabsTrigger className={tabsTriggerClassName} value="posts">
-                Posts
-              </TabsTrigger>
-              <TabsTrigger
-                className={tabsTriggerClassName}
-                value="subscriptions"
-              >
-                Subscriptions
-              </TabsTrigger>
-              <TabsTrigger
-                className={tabsTriggerClassName}
-                value="documentation"
-              >
-                Documentation
-              </TabsTrigger>
-              <TabsTrigger className={tabsTriggerClassName} value="issues">
-                Fundable Issues ({totalIssueCount})
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent className="py-6" value="readme">
-              <div className="dark:bg-polar-900 dark:border-polar-800 flex flex-col gap-y-8 rounded-3xl border border-gray-100 bg-white p-12 shadow-sm">
-                <div className="dark:text-polar-500 font-mono text-xs">
-                  README.md
-                </div>
-                <Markdown className="prose dark:prose-invert dark:prose-a:text-blue-400 prose-a:text-blue-500 prose-a:no-underline prose-img:rounded-3xl prose-headings:leading-normal prose-headings:font-normal dark:text-polar-200 w-full max-w-full font-normal leading-relaxed">{`# Illa genus
+const MARKDOWN_EXAMPLE = `# Illa genus
 
 ## Suasit talia dispar pater gentes
 
@@ -192,59 +319,4 @@ exspatiemur convicia.
 
 Arma mente vox nocti [et tenerum](http://est.org/stygate.html) poena quo affata
 aconiton in cecidit. Vocato fortior tamen, [Seriphon iurasse](http://simul.net/)
-alteraque stabat populusque confudit equi.`}</Markdown>
-              </div>
-            </TabsContent>
-            <TabsContent className="py-6" value="issues">
-              <ShadowBoxOnMd>
-                <div className="p-4">
-                  <IssuesLookingForFunding
-                    organization={organization}
-                    repository={repository}
-                    issues={issuesFunding}
-                  />
-                </div>
-              </ShadowBoxOnMd>
-            </TabsContent>
-          </Tabs>
-        </div>
-        <div className="sticky top-32 flex h-full flex-col gap-y-12">
-          <div className="flex flex-col gap-y-6">
-            <h2 className="text-xl !font-normal">Subscribers</h2>
-            <div className="flex flex-row flex-wrap gap-3">
-              {new Array(9).fill(0).map((_, idx) => (
-                <Fragment key={idx}>
-                  <Avatar className="h-10 w-10" name={'Hello'} avatar_url="" />
-                </Fragment>
-              ))}
-              {
-                <div className="dark:border-polar-700 dark:bg-polar-900 dark:text-polar-400 flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-50 text-xs font-medium text-blue-400 dark:border-2">
-                  +98
-                </div>
-              }
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-y-6">
-            <h2 className="text-xl !font-normal">Contributors</h2>
-            <div className="flex flex-col gap-y-4">
-              <p className="dark:text-polar-300 text-gray-500">
-                This repository doesn't have any contributors yet. Want to help
-                out?
-              </p>
-              <Link
-                href={`#`}
-                className="flex flex-row items-center gap-x-2 text-sm text-blue-500 dark:text-blue-400"
-              >
-                <span>Check out the issues</span>
-                <ArrowForwardOutlined className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default ClientPage
+alteraque stabat populusque confudit equi.`

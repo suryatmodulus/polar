@@ -105,7 +105,13 @@ export default async function Page({
   const api = getServerSideAPI()
   const filters = buildFundingFilters(urlSearchFromObj(searchParams))
 
-  const [repositories, issuesFunding, noFilterSearch] = await Promise.all([
+  const [
+    repositories,
+    issuesFunding,
+    noFilterSearch,
+    articles,
+    pinnedArticles,
+  ] = await Promise.all([
     api.repositories.search(
       {
         platform: Platforms.GITHUB,
@@ -137,6 +143,22 @@ export default async function Page({
       },
       cacheConfig,
     ),
+    api.articles.search(
+      {
+        platform: Platforms.GITHUB,
+        organizationName: params.organization,
+        isPinned: false,
+      },
+      cacheConfig,
+    ),
+    api.articles.search(
+      {
+        platform: Platforms.GITHUB,
+        organizationName: params.organization,
+        isPinned: true,
+      },
+      cacheConfig,
+    ),
   ])
 
   if (repositories === undefined) {
@@ -155,6 +177,8 @@ export default async function Page({
       repository={repo}
       issuesFunding={issuesFunding}
       totalIssueCount={noFilterSearch.pagination.total_count}
+      articles={articles}
+      pinnedArticles={pinnedArticles}
     />
   )
 }

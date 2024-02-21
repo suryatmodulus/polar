@@ -1,3 +1,4 @@
+import { GeistMono } from 'geist/font/mono'
 import { Inter } from 'next/font/google'
 import '../styles/globals.scss'
 
@@ -66,6 +67,7 @@ export default function RootLayout({
         className={twMerge(
           'dark:bg-polar-950 dark:text-polar-50 h-full bg-gray-50 md:h-screen',
           inter.className,
+          GeistMono.variable,
         )}
       >
         <PolarPostHogProvider>

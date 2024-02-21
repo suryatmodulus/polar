@@ -64,7 +64,7 @@ const ClientPage = ({
             <span>{repository.name}</span>
           </h1>
           <div className="flex flex-row rounded-full bg-gradient-to-r from-blue-300 to-blue-950 px-3 py-1.5 text-xs text-white">
-            Staff Pick
+            Trending
           </div>
         </div>
         <TabsList

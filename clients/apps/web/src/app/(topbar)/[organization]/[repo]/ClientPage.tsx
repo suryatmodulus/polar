@@ -14,7 +14,6 @@ import {
 import Markdown from 'markdown-to-jsx'
 import Link from 'next/link'
 import {
-  Avatar,
   ShadowBoxOnMd,
   Tabs,
   TabsContent,
@@ -23,7 +22,6 @@ import {
 } from 'polarkit/components/ui/atoms'
 import { Separator } from 'polarkit/components/ui/separator'
 import { useSearchArticles } from 'polarkit/hooks'
-import { Fragment } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 const ClientPage = ({
@@ -57,9 +55,12 @@ const ClientPage = ({
       <div className="flex flex-col gap-y-12">
         <div className="flex flex-row items-center gap-x-10">
           <h1 className="flex flex-row items-baseline gap-x-4 text-2xl !font-normal">
-            <span className="dark:text-polar-600 text-gray-400">
+            <Link
+              className="dark:text-polar-600 text-gray-400 transition-colors hover:text-blue-500 dark:hover:text-blue-400"
+              href={`/${repository.organization.name}`}
+            >
               {repository.organization.name}
-            </span>
+            </Link>
             <span className="dark:text-polar-600 text-gray-400">/</span>
             <span>{repository.name}</span>
           </h1>
@@ -77,12 +78,6 @@ const ClientPage = ({
           </TabsTrigger>
           <TabsTrigger className={tabsTriggerClassName} value="posts">
             Posts
-          </TabsTrigger>
-          <TabsTrigger className={tabsTriggerClassName} value="subscriptions">
-            Subscriptions
-          </TabsTrigger>
-          <TabsTrigger className={tabsTriggerClassName} value="documentation">
-            Documentation
           </TabsTrigger>
           <TabsTrigger className={tabsTriggerClassName} value="issues">
             Fundable Issues
@@ -218,22 +213,6 @@ export default ClientPage
 const Sidebar = () => {
   return (
     <div className="sticky top-32 flex h-full flex-col gap-y-12">
-      <div className="flex flex-col gap-y-6">
-        <h2 className="text-xl !font-normal">Subscribers</h2>
-        <div className="flex flex-row flex-wrap gap-3">
-          {new Array(9).fill(0).map((_, idx) => (
-            <Fragment key={idx}>
-              <Avatar className="h-10 w-10" name={'Hello'} avatar_url="" />
-            </Fragment>
-          ))}
-          {
-            <div className="dark:border-polar-700 dark:bg-polar-900 dark:text-polar-400 flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-50 text-xs font-medium text-blue-400 dark:border-2">
-              +98
-            </div>
-          }
-        </div>
-      </div>
-
       <div className="flex flex-col gap-y-6">
         <h2 className="text-xl !font-normal">Contributors</h2>
         <div className="flex flex-col gap-y-4">

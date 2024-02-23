@@ -50,13 +50,12 @@ const SubscriptionGroupPublic = ({
         <p className="dark:text-polar-500 mt-2 text-gray-500">{description}</p>
       </div>
 
-      <div className="grid h-fit w-full grid-cols-1 gap-6 overflow-x-auto lg:mx-0 lg:overflow-x-visible xl:grid-cols-2">
+      <div className="grid h-fit w-full grid-cols-1 gap-6 overflow-x-auto lg:mx-0 lg:grid-cols-2 lg:overflow-x-visible xl:grid-cols-3">
         {tiers.map((tier) => (
           <SubscriptionTierCard
             className="w-full self-stretch"
             key={tier.id}
             subscriptionTier={tier}
-            variant="small"
           >
             {shouldRenderSubscribeButton &&
               (tier.type === 'free' ? (

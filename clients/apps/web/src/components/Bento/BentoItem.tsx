@@ -16,7 +16,7 @@ export const BentoItem = ({
   return (
     <div
       className={twMerge(
-        'dark:bg-polar-900 relative min-h-[100px] overflow-hidden rounded-3xl',
+        'dark:bg-polar-900 dark:border-polar-800 relative flex min-h-[64px] overflow-hidden rounded-3xl border',
         colSpan === rowSpan ? 'aspect-square' : '',
       )}
       style={{

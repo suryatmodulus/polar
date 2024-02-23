@@ -1,53 +1,96 @@
-import { Issue } from '@polar-sh/sdk'
-import { motion } from 'framer-motion'
+import { Organization } from '@polar-sh/sdk'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useSearchIssues } from 'polarkit/hooks'
+import { useEffect, useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { BentoItem } from '../BentoItem'
 
 export interface FundingCardProps {
-  issue: Issue
+  organization: Organization
 }
 
-export const FundingCard = ({ issue }: FundingCardProps) => {
+export const FundingCard = ({ organization }: FundingCardProps) => {
+  const [pageIndex, setPageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPageIndex((prev) => (prev + 1) % 3)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const issues = useSearchIssues({
+    organizationName: organization.name,
+  })
+
+  const issue = useMemo(
+    () => issues.data?.items?.[pageIndex],
+    [pageIndex, issues.data],
+  )
+
   return (
-    <BentoItem
-      className="flex flex-col justify-between gap-y-4 p-8"
-      rowSpan={2}
-      colSpan={3}
-    >
-      <div className="flex w-full flex-row justify-between">
-        <div className="flex flex-col gap-y-2">
-          <p className="dark:text-polar-500 text-sm">
-            Issue looking for funding
-          </p>
-          <h3 className="text-lg">{issue.title}</h3>
-        </div>
-      </div>
-      <div className="flex flex-col gap-y-3">
-        <div className="flex flex-row items-center justify-between">
-          <h3 className="text-sm font-medium">Pledged</h3>
-          {
-            <span>
-              ${issue.funding.pledges_sum?.amount ?? 0} / $
-              {issue.funding.funding_goal?.amount ?? 0}
-            </span>
-          }
-        </div>
-        <div>
-          <div className="relative flex h-2 w-full flex-row items-center overflow-hidden rounded-md bg-blue-50 dark:bg-blue-950">
-            <motion.div
-              className="h-full rounded-md bg-blue-500 dark:bg-blue-400"
-              initial={{ width: 0 }}
-              animate={{
-                width: `${
-                  ((issue.funding.pledges_sum?.amount ?? 0) /
-                    (issue.funding.funding_goal?.amount ?? 0)) *
-                  100
-                }%`,
-              }}
-              transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
-            />
-          </div>
-        </div>
-      </div>
+    <BentoItem className="flex flex-col p-8" rowSpan={3} colSpan={6}>
+      <AnimatePresence>
+        {issue && (
+          <motion.div
+            className="flex h-full flex-col justify-between gap-y-4 "
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="flex w-full flex-row justify-between">
+              <div className="flex flex-col gap-y-4">
+                <p className="dark:text-polar-500 text-sm">
+                  Issues looking for funding
+                </p>
+                <h3 className="text-lg">{issue.title}</h3>
+              </div>
+              <div className="flex flex-row gap-x-1">
+                {new Array(3).fill(0).map((_, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className={twMerge(
+                      'dark:bg-polar-700 h-2 w-2 rounded-full',
+                      index === pageIndex && 'dark:bg-blue-500',
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-3">
+              <div className="flex flex-row items-center justify-between">
+                <h3 className="text-sm font-medium">Pledged</h3>
+                {
+                  <span>
+                    ${issue.funding.pledges_sum?.amount ?? 0} / $
+                    {issue.funding.funding_goal?.amount ?? 0}
+                  </span>
+                }
+              </div>
+              <div>
+                <div className="dark:bg-polar-700 relative flex h-2 w-full flex-row items-center overflow-hidden rounded-md bg-blue-50">
+                  <motion.div
+                    className="h-full rounded-md bg-blue-500"
+                    initial={{ width: 0 }}
+                    animate={{
+                      width: `${
+                        ((issue.funding.pledges_sum?.amount ?? 0) /
+                          (issue.funding.funding_goal?.amount ?? 0)) *
+                        100
+                      }%`,
+                    }}
+                    transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </BentoItem>
   )
 }

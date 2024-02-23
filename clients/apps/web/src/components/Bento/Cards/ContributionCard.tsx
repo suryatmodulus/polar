@@ -32,8 +32,8 @@ export const ContributionCard = () => {
   return (
     <BentoItem
       className="flex flex-col justify-between gap-y-4 p-8"
-      rowSpan={2}
-      colSpan={5}
+      rowSpan={3}
+      colSpan={6}
     >
       <div className="flex w-full flex-row justify-between">
         <div className="flex flex-col gap-y-1">

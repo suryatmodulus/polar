@@ -99,7 +99,6 @@ export default async function Page({
 
   let organization: Organization | undefined
   let pinnedArticles: ListResourceArticle | undefined
-  let articles: ListResourceArticle | undefined
   let subscriptionTiers: ListResourceSubscriptionTier | undefined
   let subscriptionSummary: ListResourceSubscriptionSummary | undefined
 
@@ -107,7 +106,6 @@ export default async function Page({
     const [
       loadOrganization,
       loadPinnedArticles,
-      loadArticles,
       loadSubscriptionTiers,
       loadSubscriptionSummary,
     ] = await Promise.all([
@@ -123,14 +121,6 @@ export default async function Page({
           platform: Platforms.GITHUB,
           organizationName: params.organization,
           isPinned: true,
-        },
-        cacheConfig,
-      ),
-      api.articles.search(
-        {
-          platform: Platforms.GITHUB,
-          organizationName: params.organization,
-          isPinned: false,
         },
         cacheConfig,
       ),
@@ -152,7 +142,6 @@ export default async function Page({
 
     organization = loadOrganization
     pinnedArticles = loadPinnedArticles
-    articles = loadArticles
     subscriptionTiers = loadSubscriptionTiers
     subscriptionSummary = loadSubscriptionSummary
   } catch (e) {
@@ -163,7 +152,6 @@ export default async function Page({
     <ClientPage
       organization={organization}
       pinnedArticles={pinnedArticles}
-      articles={articles}
       subscriptionTiers={subscriptionTiers}
       subscriptionSummary={subscriptionSummary}
     />

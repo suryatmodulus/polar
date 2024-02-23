@@ -105,7 +105,7 @@ const ClientPage = ({
 
   return (
     <div className="flex flex-col gap-y-16">
-      <BentoGrid />
+      <BentoGrid organization={organization} />
       <div className="flex flex-col-reverse gap-x-16 md:flex-row">
         <div className="flex w-full flex-grow flex-col gap-y-6 md:max-w-xl">
           <div className="flex w-full flex-col gap-y-6">

@@ -38,7 +38,7 @@ export const ContributionCard = () => {
       <div className="flex w-full flex-row justify-between">
         <div className="flex flex-col gap-y-1">
           <h3 className="text-lg">Contributions</h3>
-          <p className="dark:text-polar-500 text-sm">Last Year</p>
+          <p className="dark:text-polar-500 text-sm">Last 52 weeks</p>
         </div>
         <Link className="text-xs text-blue-500 dark:text-blue-400" href="#">
           View all activity

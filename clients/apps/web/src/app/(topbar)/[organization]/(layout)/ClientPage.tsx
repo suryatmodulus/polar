@@ -1,5 +1,6 @@
 'use client'
 
+import { BentoGrid } from '@/components/Bento/BentoGrid'
 import { Post as PostComponent } from '@/components/Feed/Posts/Post'
 import { Modal, ModalHeader } from '@/components/Modal'
 import { useModal } from '@/components/Modal/useModal'
@@ -103,241 +104,247 @@ const ClientPage = ({
   )
 
   return (
-    <div className="flex flex-col-reverse gap-x-16 md:flex-row">
-      <div className="flex w-full flex-grow flex-col gap-y-6 md:max-w-xl">
-        <div className="flex w-full flex-col gap-y-6">
-          <div className="flex w-full flex-col gap-y-12">
-            {(pinnedArticles.items?.length ?? 0) > 0 ? (
-              <>
-                <div className="flex w-full flex-col gap-y-6">
-                  {pinnedArticles.items?.map((post) => (
-                    <PostComponent
-                      article={post}
-                      key={post.id}
-                      highlightPinned
-                    />
-                  ))}
-                </div>
-                <Separator className="dark:bg-polar-800 bg-gray-100" />
-              </>
-            ) : null}
-
-            {infinitePosts.length > 0 ? (
-              <div className="flex w-full flex-col gap-y-6">
-                {infinitePosts.map((post) => (
-                  <PostComponent article={post} key={post.id} />
-                ))}
-                <div ref={inViewRef} />
-              </div>
-            ) : (
-              <>
-                {posts.isFetched &&
-                infinitePosts.length === 0 &&
-                (pinnedArticles.items?.length ?? 0) === 0 ? (
-                  <div className="dark:text-polar-400 flex h-full w-full flex-col items-center gap-y-4 pt-32 text-gray-600">
-                    <ViewDayOutlined fontSize="large" />
-                    <div className="flex w-full flex-col items-center gap-y-2 px-12 text-center">
-                      {isAdmin ? (
-                        <>
-                          <h3 className="p-2 text-lg font-medium">
-                            {organization.name} is typing...
-                          </h3>
-                          <p className="dark:text-polar-500 w-full min-w-0 text-gray-500">
-                            Start building a community & newsletter by writing
-                            your first post – your hello world on Polar
-                          </p>
-                          <Link
-                            className="mt-6"
-                            href={`/maintainer/${organization.name}/posts/new`}
-                          >
-                            <Button>Write a Post</Button>
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <h3 className="p-2 text-lg font-medium">
-                            {organization.name} is typing...
-                          </h3>
-                          <p className="dark:text-polar-500 w-full min-w-0 text-gray-500">
-                            Subscribe to {organization.name} to get future posts
-                            fresh out of the press.
-                          </p>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ) : null}
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="flex w-full flex-shrink flex-col gap-y-10 self-start md:max-w-[300px]">
-        {subscribers.length > 0 && (
-          <div className="flex flex-col gap-y-6">
-            <div className="flex flex-row items-start justify-between">
-              <h3 className="dark:text-polar-50 text-gray-950">Subscribers</h3>
-              <h3 className="dark:text-polar-500 text-sm text-gray-500">
-                {subscribersCount}
-              </h3>
-            </div>
-            <div className="flex flex-row flex-wrap gap-3">
-              {subscribers.map(({ user, organization }, idx) => (
-                <React.Fragment key={idx}>
-                  {organization && (
-                    <Link
-                      key={organization.name}
-                      href={`https://github.com/${organization.name}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Avatar
-                        className="h-10 w-10"
-                        name={organization.name}
-                        avatar_url={organization.avatar_url}
+    <div className="flex flex-col gap-y-16">
+      <BentoGrid />
+      <div className="flex flex-col-reverse gap-x-16 md:flex-row">
+        <div className="flex w-full flex-grow flex-col gap-y-6 md:max-w-xl">
+          <div className="flex w-full flex-col gap-y-6">
+            <div className="flex w-full flex-col gap-y-12">
+              {(pinnedArticles.items?.length ?? 0) > 0 ? (
+                <>
+                  <div className="flex w-full flex-col gap-y-6">
+                    {pinnedArticles.items?.map((post) => (
+                      <PostComponent
+                        article={post}
+                        key={post.id}
+                        highlightPinned
                       />
-                    </Link>
-                  )}
-                  {!organization && (
-                    <>
-                      {user.github_username ? (
-                        <Link
-                          key={user.github_username}
-                          href={`https://github.com/${user.github_username}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Avatar
-                            className="h-10 w-10"
-                            name={user.github_username}
-                            avatar_url={user.avatar_url}
-                          />
-                        </Link>
-                      ) : (
-                        <Avatar
-                          className="h-10 w-10"
-                          name={user.public_name}
-                          avatar_url={user.avatar_url}
-                        />
-                      )}
-                    </>
-                  )}
-                </React.Fragment>
-              ))}
-              {subscribersHiddenCount > 0 && (
-                <div className="dark:border-polar-700 dark:bg-polar-900 dark:text-polar-400 flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-50 text-xs font-medium text-blue-400 dark:border-2">
-                  +{subscribersHiddenCount}
+                    ))}
+                  </div>
+                  <Separator className="dark:bg-polar-800 bg-gray-100" />
+                </>
+              ) : null}
+
+              {infinitePosts.length > 0 ? (
+                <div className="flex w-full flex-col gap-y-6">
+                  {infinitePosts.map((post) => (
+                    <PostComponent article={post} key={post.id} />
+                  ))}
+                  <div ref={inViewRef} />
                 </div>
+              ) : (
+                <>
+                  {posts.isFetched &&
+                  infinitePosts.length === 0 &&
+                  (pinnedArticles.items?.length ?? 0) === 0 ? (
+                    <div className="dark:text-polar-400 flex h-full w-full flex-col items-center gap-y-4 pt-32 text-gray-600">
+                      <ViewDayOutlined fontSize="large" />
+                      <div className="flex w-full flex-col items-center gap-y-2 px-12 text-center">
+                        {isAdmin ? (
+                          <>
+                            <h3 className="p-2 text-lg font-medium">
+                              {organization.name} is typing...
+                            </h3>
+                            <p className="dark:text-polar-500 w-full min-w-0 text-gray-500">
+                              Start building a community & newsletter by writing
+                              your first post – your hello world on Polar
+                            </p>
+                            <Link
+                              className="mt-6"
+                              href={`/maintainer/${organization.name}/posts/new`}
+                            >
+                              <Button>Write a Post</Button>
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <h3 className="p-2 text-lg font-medium">
+                              {organization.name} is typing...
+                            </h3>
+                            <p className="dark:text-polar-500 w-full min-w-0 text-gray-500">
+                              Subscribe to {organization.name} to get future
+                              posts fresh out of the press.
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  ) : null}
+                </>
               )}
             </div>
           </div>
-        )}
-        {(highlightedTiers?.length ?? 0) > 0 && (
-          <div className="flex w-full flex-col justify-start gap-y-6">
-            <div className="flex flex-col gap-y-4">
-              <div className="flex flex-row items-center justify-between">
-                <h3>Subscriptions</h3>
-                <Link
-                  className="flex flex-row items-center gap-x-2 text-blue-500 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
-                  href={`/${organization.name}/subscriptions`}
-                >
-                  <span className="text-xs">View All</span>
-                </Link>
+        </div>
+
+        <div className="flex w-full flex-shrink flex-col gap-y-10 self-start md:max-w-[300px]">
+          {subscribers.length > 0 && (
+            <div className="flex flex-col gap-y-6">
+              <div className="flex flex-row items-start justify-between">
+                <h3 className="dark:text-polar-50 text-gray-950">
+                  Subscribers
+                </h3>
+                <h3 className="dark:text-polar-500 text-sm text-gray-500">
+                  {subscribersCount}
+                </h3>
               </div>
-              <p className="dark:text-polar-500 text-sm leading-normal text-gray-500">
-                Support {organization.name} with a paid subscription & receive
-                unique benefits as a bonus
-              </p>
-            </div>
-            <div className="-mx-4 flex flex-row items-start gap-6 overflow-x-auto px-4 pb-6 md:mx-0 md:flex-col md:px-0 md:pb-0">
-              {highlightedTiers?.map((tier) => (
-                <Link
-                  key={tier.id}
-                  className="flex h-full w-4/5 flex-shrink-0 flex-row items-center gap-x-2 md:w-full"
-                  href={`/${organization.name}/subscriptions#${tier.name}`}
-                >
-                  <Card className="dark:hover:bg-polar-800 h-full w-full overflow-hidden transition-colors hover:bg-blue-50">
-                    <CardHeader className="flex flex-col gap-y-2 p-6 pb-0">
-                      <span className="dark:text-polar-500 text-xs text-gray-500">
-                        {getSubscriptionTierAudience(tier)}
-                      </span>
-                      <div className="flex flex-row items-center justify-between">
-                        <div className="flex flex-row gap-x-2">
-                          <SubscriptionGroupIcon
-                            className="text-[20px]"
-                            type={tier.type}
-                          />
-                          <h3 className="font-medium">{tier.name}</h3>
-                        </div>
-                        <div>
-                          $
-                          {getCentsInDollarString(
-                            tier.price_amount,
-                            false,
-                            true,
-                          )}
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="flex flex-col gap-y-4 px-6 pb-6 pt-4">
-                      <p className="dark:text-polar-400 text-sm leading-normal text-gray-600">
-                        {tier.description}
-                      </p>
-                    </CardContent>
-                    {tier.benefits.length > 0 && (
+              <div className="flex flex-row flex-wrap gap-3">
+                {subscribers.map(({ user, organization }, idx) => (
+                  <React.Fragment key={idx}>
+                    {organization && (
+                      <Link
+                        key={organization.name}
+                        href={`https://github.com/${organization.name}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Avatar
+                          className="h-10 w-10"
+                          name={organization.name}
+                          avatar_url={organization.avatar_url}
+                        />
+                      </Link>
+                    )}
+                    {!organization && (
                       <>
-                        <Separator />
-                        <CardFooter className="flex flex-col items-start gap-y-2 p-6">
-                          {tier.benefits?.map((benefit) => (
-                            <div
-                              key={benefit.id}
-                              className="dark:text-polar-200 flex flex-row items-start text-gray-950"
-                            >
-                              <div className="flex flex-row items-center gap-x-2 text-blue-500 dark:text-blue-400">
-                                <span className="flex h-6 w-6 shrink-0  flex-row items-center justify-center rounded-full bg-blue-50 text-[14px] dark:bg-blue-950">
-                                  {resolveBenefitIcon(benefit, 'inherit')}
-                                </span>
-                                <span className="text-xs">
-                                  {benefit.description}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
-                        </CardFooter>
+                        {user.github_username ? (
+                          <Link
+                            key={user.github_username}
+                            href={`https://github.com/${user.github_username}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Avatar
+                              className="h-10 w-10"
+                              name={user.github_username}
+                              avatar_url={user.avatar_url}
+                            />
+                          </Link>
+                        ) : (
+                          <Avatar
+                            className="h-10 w-10"
+                            name={user.public_name}
+                            avatar_url={user.avatar_url}
+                          />
+                        )}
                       </>
                     )}
-                  </Card>
-                </Link>
-              ))}
+                  </React.Fragment>
+                ))}
+                {subscribersHiddenCount > 0 && (
+                  <div className="dark:border-polar-700 dark:bg-polar-900 dark:text-polar-400 flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-50 text-xs font-medium text-blue-400 dark:border-2">
+                    +{subscribersHiddenCount}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {(highlightedTiers?.length ?? 0) > 0 && (
+            <div className="flex w-full flex-col justify-start gap-y-6">
+              <div className="flex flex-col gap-y-4">
+                <div className="flex flex-row items-center justify-between">
+                  <h3>Subscriptions</h3>
+                  <Link
+                    className="flex flex-row items-center gap-x-2 text-blue-500 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
+                    href={`/${organization.name}/subscriptions`}
+                  >
+                    <span className="text-xs">View All</span>
+                  </Link>
+                </div>
+                <p className="dark:text-polar-500 text-sm leading-normal text-gray-500">
+                  Support {organization.name} with a paid subscription & receive
+                  unique benefits as a bonus
+                </p>
+              </div>
+              <div className="-mx-4 flex flex-row items-start gap-6 overflow-x-auto px-4 pb-6 md:mx-0 md:flex-col md:px-0 md:pb-0">
+                {highlightedTiers?.map((tier) => (
+                  <Link
+                    key={tier.id}
+                    className="flex h-full w-4/5 flex-shrink-0 flex-row items-center gap-x-2 md:w-full"
+                    href={`/${organization.name}/subscriptions#${tier.name}`}
+                  >
+                    <Card className="dark:hover:bg-polar-800 h-full w-full overflow-hidden transition-colors hover:bg-blue-50">
+                      <CardHeader className="flex flex-col gap-y-2 p-6 pb-0">
+                        <span className="dark:text-polar-500 text-xs text-gray-500">
+                          {getSubscriptionTierAudience(tier)}
+                        </span>
+                        <div className="flex flex-row items-center justify-between">
+                          <div className="flex flex-row gap-x-2">
+                            <SubscriptionGroupIcon
+                              className="text-[20px]"
+                              type={tier.type}
+                            />
+                            <h3 className="font-medium">{tier.name}</h3>
+                          </div>
+                          <div>
+                            $
+                            {getCentsInDollarString(
+                              tier.price_amount,
+                              false,
+                              true,
+                            )}
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="flex flex-col gap-y-4 px-6 pb-6 pt-4">
+                        <p className="dark:text-polar-400 text-sm leading-normal text-gray-600">
+                          {tier.description}
+                        </p>
+                      </CardContent>
+                      {tier.benefits.length > 0 && (
+                        <>
+                          <Separator />
+                          <CardFooter className="flex flex-col items-start gap-y-2 p-6">
+                            {tier.benefits?.map((benefit) => (
+                              <div
+                                key={benefit.id}
+                                className="dark:text-polar-200 flex flex-row items-start text-gray-950"
+                              >
+                                <div className="flex flex-row items-center gap-x-2 text-blue-500 dark:text-blue-400">
+                                  <span className="flex h-6 w-6 shrink-0  flex-row items-center justify-center rounded-full bg-blue-50 text-[14px] dark:bg-blue-950">
+                                    {resolveBenefitIcon(benefit, 'inherit')}
+                                  </span>
+                                  <span className="text-xs">
+                                    {benefit.description}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </CardFooter>
+                        </>
+                      )}
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="flex flex-col justify-start gap-y-6">
+            <div className="hidden flex-col gap-y-2 md:flex">
+              <h3>RSS Feed</h3>
+              <p className="dark:text-polar-500 text-sm leading-normal text-gray-500">
+                Consume posts from {organization.name} in your favorite RSS
+                reader
+              </p>
+              <Button
+                className="flex flex-row self-start p-0 text-blue-500 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
+                onClick={showRssModal}
+                variant="ghost"
+              >
+                <RssIcon className="h-4 w-4" />
+                <span className="ml-2 text-sm">Generate RSS Link</span>
+              </Button>
             </div>
           </div>
-        )}
-        <div className="flex flex-col justify-start gap-y-6">
-          <div className="hidden flex-col gap-y-2 md:flex">
-            <h3>RSS Feed</h3>
-            <p className="dark:text-polar-500 text-sm leading-normal text-gray-500">
-              Consume posts from {organization.name} in your favorite RSS reader
-            </p>
-            <Button
-              className="flex flex-row self-start p-0 text-blue-500 hover:text-blue-400 dark:text-blue-400 dark:hover:text-blue-300"
-              onClick={showRssModal}
-              variant="ghost"
-            >
-              <RssIcon className="h-4 w-4" />
-              <span className="ml-2 text-sm">Generate RSS Link</span>
-            </Button>
-          </div>
         </div>
-      </div>
 
-      <Modal
-        isShown={rssModalIsShown}
-        hide={hideRssModal}
-        modalContent={
-          <RssModal hide={hideRssModal} organization={organization} />
-        }
-      />
+        <Modal
+          isShown={rssModalIsShown}
+          hide={hideRssModal}
+          modalContent={
+            <RssModal hide={hideRssModal} organization={organization} />
+          }
+        />
+      </div>
     </div>
   )
 }

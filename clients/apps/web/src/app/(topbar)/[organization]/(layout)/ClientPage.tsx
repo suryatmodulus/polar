@@ -105,6 +105,28 @@ const ClientPage = ({
 
   return (
     <div className="flex flex-col gap-y-16">
+      <div className="flex w-1/2 flex-col gap-y-12">
+        <div className="flex flex-row items-center gap-x-8">
+          <Avatar
+            className="h-16 w-16"
+            avatar_url={organization.avatar_url}
+            name={organization.name}
+          />
+          <div className="flex flex-col items-center gap-y-2">
+            <h3 className="text-2xl">
+              {organization.pretty_name ?? organization.name}
+            </h3>
+          </div>
+        </div>
+        {organization.bio && (
+          <>
+            <p className="dark:text-polar-50 text-3xl !font-normal leading-normal text-gray-950">
+              {organization.bio}
+            </p>
+          </>
+        )}
+      </div>
+
       <BentoGrid organization={organization} />
       <div className="flex flex-col-reverse gap-x-16 md:flex-row">
         <div className="flex w-full flex-grow flex-col gap-y-6 md:max-w-xl">

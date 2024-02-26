@@ -33,21 +33,21 @@ export const FundingCard = ({ organization }: FundingCardProps) => {
 
   return (
     <BentoItem
-      className="dark:hover:bg-polar-800 flex flex-col p-8 transition-colors"
+      className="dark:hover:bg-polar-800 flex flex-col transition-colors"
       rowSpan={3}
       colSpan={6}
     >
       <AnimatePresence>
         {issue && (
-          <Link
-            className="h-full"
-            href={`/${issue.repository.organization.name}/${issue.repository.name}/issues/${issue.number}`}
+          <motion.div
+            className="absolute inset-0 h-full w-full p-8"
+            key={issue.id}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <motion.div
+            <Link
               className="flex h-full flex-col justify-between gap-y-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              href={`/${issue.repository.organization.name}/${issue.repository.name}/issues/${issue.number}`}
             >
               <div className="flex w-full flex-row justify-between">
                 <div className="flex flex-col gap-y-4">
@@ -60,7 +60,6 @@ export const FundingCard = ({ organization }: FundingCardProps) => {
                   {new Array(3).fill(0).map((_, index) => (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       className={twMerge(
@@ -112,8 +111,8 @@ export const FundingCard = ({ organization }: FundingCardProps) => {
                   </Button>
                 </Link>
               </div>
-            </motion.div>
-          </Link>
+            </Link>
+          </motion.div>
         )}
       </AnimatePresence>
     </BentoItem>

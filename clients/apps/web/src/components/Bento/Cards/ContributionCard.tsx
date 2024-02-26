@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BentoItem } from '../BentoItem'
 
 export const ContributionCard = () => {
   const dots = useMemo(
@@ -30,23 +29,25 @@ export const ContributionCard = () => {
   )
 
   return (
-    <BentoItem
-      className="flex flex-col justify-between gap-y-4 p-8"
-      rowSpan={3}
-      colSpan={6}
+    <div
+      className={twMerge(
+        'dark:bg-polar-900 dark:border-polar-800 relative flex h-fit flex-col gap-y-12 overflow-hidden rounded-3xl border p-8',
+      )}
     >
       <div className="flex w-full flex-row justify-between">
         <div className="flex flex-col gap-y-1">
           <h3 className="text-lg">Contributions</h3>
-          <p className="dark:text-polar-500 text-sm">Last 52 weeks</p>
+          <p className="dark:text-polar-500 text-sm text-gray-500">
+            Last 52 weeks
+          </p>
         </div>
         <Link className="text-xs text-blue-500 dark:text-blue-400" href="#">
           View all activity
         </Link>
       </div>
-      <div className="grid grid-cols-[repeat(52,minmax(0,1fr))] grid-rows-[repeat(7,minmax(0,1fr))] gap-1">
+      <div className="grid grid-cols-[repeat(52,minmax(0,1fr))] grid-rows-[repeat(7,minmax(0,1fr))] gap-2">
         {dots}
       </div>
-    </BentoItem>
+    </div>
   )
 }

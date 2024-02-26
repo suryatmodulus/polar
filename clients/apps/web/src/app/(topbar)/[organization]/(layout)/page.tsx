@@ -1,6 +1,7 @@
 import { getServerSideAPI } from '@/utils/api'
 import {
   ListResourceArticle,
+  ListResourceRepository,
   ListResourceSubscriptionSummary,
   ListResourceSubscriptionTier,
   Organization,
@@ -101,6 +102,7 @@ export default async function Page({
   let pinnedArticles: ListResourceArticle | undefined
   let subscriptionTiers: ListResourceSubscriptionTier | undefined
   let subscriptionSummary: ListResourceSubscriptionSummary | undefined
+  let repositories: ListResourceRepository | undefined
 
   try {
     const [
@@ -108,6 +110,7 @@ export default async function Page({
       loadPinnedArticles,
       loadSubscriptionTiers,
       loadSubscriptionSummary,
+      loadRepositories,
     ] = await Promise.all([
       api.organizations.lookup(
         {
@@ -138,12 +141,20 @@ export default async function Page({
         },
         cacheConfig,
       ),
+      api.repositories.search(
+        {
+          platform: Platforms.GITHUB,
+          organizationName: params.organization,
+        },
+        cacheConfig,
+      ),
     ])
 
     organization = loadOrganization
     pinnedArticles = loadPinnedArticles
     subscriptionTiers = loadSubscriptionTiers
     subscriptionSummary = loadSubscriptionSummary
+    repositories = loadRepositories
   } catch (e) {
     notFound()
   }
@@ -154,6 +165,7 @@ export default async function Page({
       pinnedArticles={pinnedArticles}
       subscriptionTiers={subscriptionTiers}
       subscriptionSummary={subscriptionSummary}
+      repositories={repositories}
     />
   )
 }

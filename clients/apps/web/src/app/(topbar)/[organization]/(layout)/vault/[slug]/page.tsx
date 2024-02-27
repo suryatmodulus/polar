@@ -1,4 +1,4 @@
-import { productMocks } from '@/app/maintainer/[organization]/(topbar)/products/data'
+import { vaultMocks } from '@/app/maintainer/[organization]/(topbar)/vault/data'
 import PageNotFound from '@/components/Shared/PageNotFound'
 import { getServerSideAPI } from '@/utils/api'
 import { Organization, Platforms, ResponseError } from '@polar-sh/sdk'
@@ -91,11 +91,11 @@ export default async function Page({
     ),
   ])
 
-  const product = productMocks.find((product) => product.slug === params.slug)
+  const entity = vaultMocks.find((entity) => entity.slug === params.slug)
 
-  if (organization === undefined || product === undefined) {
+  if (organization === undefined || entity === undefined) {
     return <PageNotFound />
   }
 
-  return <ClientPage organization={organization} product={product} />
+  return <ClientPage organization={organization} entity={entity} />
 }

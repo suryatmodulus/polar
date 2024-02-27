@@ -2,19 +2,14 @@
 
 import { DashboardBody } from '@/components/Layout/DashboardLayout'
 import { useParams } from 'next/navigation'
-import {
-  Input,
-  MoneyInput,
-  ShadowBoxOnMd,
-  TextArea,
-} from 'polarkit/components/ui/atoms'
-import { productMocks } from '../data'
+import { Input, ShadowBoxOnMd, TextArea } from 'polarkit/components/ui/atoms'
+import { vaultMocks } from '../data'
 
 const ClientPage = () => {
   const { slug } = useParams()
-  const product = productMocks.find((product) => product.slug === slug)
+  const entity = vaultMocks.find((entity) => entity.slug === slug)
 
-  if (!product) {
+  if (!entity) {
     return null
   }
 
@@ -25,22 +20,13 @@ const ClientPage = () => {
         <div className="flex flex-col items-start gap-y-6">
           <div className="flex min-w-[260px] flex-col gap-y-2">
             <span className="text-sm">Name</span>
-            <Input placeholder="Name" defaultValue={product.name} />
+            <Input placeholder="Name" defaultValue={entity.name} />
           </div>
           <div className="flex w-full flex-col gap-y-2">
             <span className="text-sm">Description</span>
             <TextArea
               placeholder="Description"
-              defaultValue={product.description}
-            />
-          </div>
-          <div className="flex min-w-[260px] flex-col gap-y-2">
-            <span className="text-sm">Price</span>
-            <MoneyInput
-              id="price"
-              name="price"
-              placeholder={0}
-              value={product.price}
+              defaultValue={entity.description}
             />
           </div>
         </div>

@@ -1,13 +1,13 @@
 'use client'
 
 import { DashboardBody } from '@/components/Layout/DashboardLayout'
-import { ProductTile } from '@/components/Product/ProductTile'
 import { StaggerReveal } from '@/components/Shared/StaggerReveal'
+import { VaultEntityTile } from '@/components/Vault/VaultEntityTile'
 import { useCurrentOrgAndRepoFromURL } from '@/hooks'
 import { AddOutlined } from '@mui/icons-material'
 import Link from 'next/link'
 import { Button } from 'polarkit/components/ui/atoms'
-import { productMocks } from './data'
+import { vaultMocks } from './data'
 
 const ClientPage = () => {
   const { org } = useCurrentOrgAndRepoFromURL()
@@ -23,16 +23,16 @@ const ClientPage = () => {
             </Button>
           </Link>
         </div>
-        <StaggerReveal className="grid grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-4">
-          {productMocks.map((product) => (
+        <StaggerReveal className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {vaultMocks.map((entity) => (
             <StaggerReveal.Child
-              key={product.id}
+              key={entity.id}
               className="flex flex-grow flex-col"
             >
-              <Link href={`/maintainer/${org?.name}/products/${product.slug}`}>
-                <ProductTile
-                  link={`/maintainer/${org?.name}/products/${product.slug}`}
-                  product={product}
+              <Link href={`/maintainer/${org?.name}/vault/${entity.slug}`}>
+                <VaultEntityTile
+                  link={`/maintainer/${org?.name}/vault/${entity.slug}`}
+                  entity={entity}
                 />
               </Link>
             </StaggerReveal.Child>

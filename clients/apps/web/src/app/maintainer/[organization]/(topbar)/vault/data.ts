@@ -1,16 +1,16 @@
-import { Product, ProductType } from '@/components/Product/Product'
+import { VaultEntity, VaultEntityType } from '@/components/Vault/VaultEntity'
 
 const lipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac pretium nunc. Ut pulvinar commodo purus. Mauris sed scelerisque ligula, vel accumsan magna. Quisque eu sem eget urna iaculis mattis eu eu mauris.\n\nInteger faucibus blandit ligula sed fermentum. Nam luctus libero ac hendrerit eleifend. Integer luctus ligula sollicitudin ligula porta, sed mollis neque pretium.`
 
 const createdAt = new Date(`2023-0${Math.round(Math.random() * 9)}-01`)
 
-export const productMocks: Product[] = [
+export const vaultMocks: VaultEntity[] = [
   {
     id: '1',
     slug: 'spline-3d-tutorial',
     name: 'Spline 3D Tutorial',
     description: lipsum,
-    type: ProductType.TUTORIAL,
+    type: VaultEntityType.TUTORIAL,
     videos: [
       {
         name: 'sample.mp4',
@@ -33,7 +33,7 @@ export const productMocks: Product[] = [
     name: 'Product 2',
     slug: 'product-2',
     description: lipsum,
-    type: ProductType.DIGITAL,
+    type: VaultEntityType.DIGITAL,
     files: [
       {
         name: 'sample.jpg',
@@ -56,7 +56,7 @@ export const productMocks: Product[] = [
     slug: 'product-5',
     name: 'Product 5',
     description: lipsum,
-    type: ProductType.DIGITAL,
+    type: VaultEntityType.DIGITAL,
     files: [
       {
         name: 'sample.jpg',
@@ -79,7 +79,7 @@ export const productMocks: Product[] = [
     slug: 'product-6',
     name: 'Product 6',
     description: lipsum,
-    type: ProductType.DIGITAL,
+    type: VaultEntityType.DIGITAL,
     organization: {
       name: 'emilwidlund',
       avatarUrl: 'https://avatars.githubusercontent.com/u/1025102?v=4',

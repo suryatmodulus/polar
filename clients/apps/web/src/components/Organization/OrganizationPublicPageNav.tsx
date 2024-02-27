@@ -46,8 +46,8 @@ export const OrganizationPublicPageNav = ({
     if (pathParts.length >= 3 && pathParts[2] === 'posts') {
       return 'posts'
     }
-    if (pathParts.length >= 3 && pathParts[2] === 'products') {
-      return 'products'
+    if (pathParts.length >= 3 && pathParts[2] === 'vault') {
+      return 'vault'
     }
     if (pathParts.length >= 3 && pathParts[2] === 'subscriptions') {
       return 'subscriptions'
@@ -99,7 +99,7 @@ export const OrganizationPublicPageNav = ({
         <SelectContent>
           <SelectItem value="overview">Overview</SelectItem>
           <SelectItem value="posts">Posts</SelectItem>
-          <SelectItem value="products">Products</SelectItem>
+          <SelectItem value="vault">Vault</SelectItem>
           <SelectItem value="subscriptions">Subscriptions</SelectItem>
           <SelectItem value="issues">Issues</SelectItem>
           <SelectItem value="repositories">Repositories</SelectItem>
@@ -134,14 +134,14 @@ export const OrganizationPublicPageNav = ({
           </TabsTrigger>
         </Link>
 
-        {isFeatureEnabled('products') && (
-          <Link href={`/${organization.name}/products`}>
+        {isFeatureEnabled('vault') && (
+          <Link href={`/${organization.name}/vault`}>
             <TabsTrigger
               className={tabsTriggerClassName}
-              value="products"
+              value="vault"
               size="small"
             >
-              Products
+              Vault
             </TabsTrigger>
           </Link>
         )}

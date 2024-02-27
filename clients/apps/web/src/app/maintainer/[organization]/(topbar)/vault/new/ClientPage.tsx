@@ -1,11 +1,11 @@
 'use client'
 
 import { DashboardBody } from '@/components/Layout/DashboardLayout'
-import {
-  ProductType,
-  resolveProductTypeIcon,
-} from '@/components/Product/Product'
 import DashboardTopbar from '@/components/Shared/DashboardTopbar'
+import {
+  VaultEntityType,
+  resolveVaultEntityTypeIcon,
+} from '@/components/Vault/VaultEntity'
 import { CloseOutlined, UploadFileOutlined } from '@mui/icons-material'
 import { useRouter } from 'next/navigation'
 import {
@@ -29,23 +29,23 @@ import { twMerge } from 'tailwind-merge'
 
 const productTypes = [
   {
-    name: ProductType.DIGITAL,
-    icon: resolveProductTypeIcon(ProductType.DIGITAL),
+    name: VaultEntityType.DIGITAL,
+    icon: resolveVaultEntityTypeIcon(VaultEntityType.DIGITAL),
     description: 'A file or collection of files that can be downloaded',
   },
   {
-    name: ProductType.TUTORIAL,
-    icon: resolveProductTypeIcon(ProductType.TUTORIAL),
+    name: VaultEntityType.TUTORIAL,
+    icon: resolveVaultEntityTypeIcon(VaultEntityType.TUTORIAL),
     description: 'An in-depth, comprehensive video tutorial',
   },
   {
-    name: ProductType.LICENSE,
-    icon: resolveProductTypeIcon(ProductType.LICENSE),
+    name: VaultEntityType.LICENSE,
+    icon: resolveVaultEntityTypeIcon(VaultEntityType.LICENSE),
     description: 'A license to use a product or service',
   },
   {
-    name: ProductType.BUNDLE,
-    icon: resolveProductTypeIcon(ProductType.BUNDLE),
+    name: VaultEntityType.BUNDLE,
+    icon: resolveVaultEntityTypeIcon(VaultEntityType.BUNDLE),
     description: 'Create a bundle of existing products',
   },
 ] as const
@@ -54,15 +54,15 @@ const ClientPage = () => {
   const thumbnailInputRef = useRef<HTMLInputElement>(null)
   const [price, setPrice] = useState(0)
   const [thumbnail, setThumbnail] = useState<string>()
-  const [selectedType, setSelectedType] = useState<ProductType>(
-    ProductType.DIGITAL,
+  const [selectedType, setSelectedType] = useState<VaultEntityType>(
+    VaultEntityType.DIGITAL,
   )
 
   const router = useRouter()
 
   const shouldRenderUploadManager = useMemo(
     () =>
-      [ProductType.DIGITAL, ProductType.TUTORIAL].some(
+      [VaultEntityType.DIGITAL, VaultEntityType.TUTORIAL].some(
         (type) => type === selectedType,
       ),
     [selectedType],
@@ -158,8 +158,8 @@ const ClientPage = () => {
 export default ClientPage
 
 interface ProductTypeSelectorProps {
-  selectedType: ProductType
-  onSelectType: (productType: ProductType) => void
+  selectedType: VaultEntityType
+  onSelectType: (productType: VaultEntityType) => void
 }
 
 const ProductTypeSelector = ({

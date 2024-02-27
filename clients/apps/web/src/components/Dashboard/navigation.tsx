@@ -11,7 +11,6 @@ import {
   Face,
   FavoriteBorderOutlined,
   HowToVoteOutlined,
-  SellOutlined,
   SpaceDashboardOutlined,
   TuneOutlined,
   ViewDayOutlined,
@@ -89,14 +88,14 @@ export const maintainerRoutes = (org: Organization): Route[] => [
       },
     ],
   },
-  ...(isFeatureEnabled('products')
+  ...(isFeatureEnabled('vault')
     ? [
         {
-          id: 'org-products',
-          title: 'Products',
+          id: 'org-vault',
+          title: 'Vault',
           icon: <DiamondOutlined className="h-5 w-5" fontSize="inherit" />,
           postIcon: undefined,
-          link: `/maintainer/${org.name}/products`,
+          link: `/maintainer/${org.name}/vault`,
           if: true,
           subs: [],
         },
@@ -175,19 +174,6 @@ export const backerRoutes = (): Route[] => [
     if: true,
     subs: undefined,
   },
-  ...(isFeatureEnabled('products')
-    ? [
-        {
-          id: 'purchases',
-          title: 'Purchases',
-          link: `/purchases`,
-          icon: <SellOutlined className="h-5 w-5" fontSize="inherit" />,
-          postIcon: undefined,
-          if: true,
-          subs: undefined,
-        },
-      ]
-    : []),
   {
     id: 'funding',
     title: 'Funding',

@@ -5,47 +5,6 @@ const lipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac p
 
 const createdAt = new Date(`2023-0${Math.round(Math.random() * 9)}-01`)
 
-export const vaultCollectionMocks: VaultCollection[] = [
-  {
-    id: '1',
-    name: 'Thoughts & Ramblings',
-    slug: 'spline-3d-tutorial',
-    description: `A set of inspirational posts I've collected over the years.`,
-    entities: [
-      {
-        id: '1',
-        slug: 'spline-3d-tutorial',
-        name: 'Spline 3D Tutorial',
-        description: lipsum,
-        type: VaultEntityType.TUTORIAL,
-        videos: [
-          {
-            name: 'sample.mp4',
-            url: '/videos/sample.mp4',
-            duration: 600,
-          },
-        ],
-        organization: {
-          name: 'emilwidlund',
-          avatarUrl: 'https://avatars.githubusercontent.com/u/1025102?v=4',
-        },
-        image:
-          'https://cdn.midjourney.com/8c128e1d-ee8e-4923-8f0a-4bcb5ec9b219/0_1.webp',
-        createdAt,
-      },
-    ],
-    subscriptionTier: {
-      id: '1',
-      name: 'Tier 1',
-    },
-    organization: {
-      name: 'emilwidlund',
-      avatarUrl: 'https://avatars.githubusercontent.com/u/1025102?v=4',
-    },
-    createdAt,
-  },
-]
-
 export const vaultMocks: VaultEntity[] = [
   {
     id: '1',
@@ -129,6 +88,25 @@ export const vaultMocks: VaultEntity[] = [
     ],
     image:
       'https://cdn.midjourney.com/138817cd-5bfe-4ef1-839e-6ad3b1b74629/0_2.webp',
+    createdAt,
+  },
+]
+
+export const vaultCollectionMocks: VaultCollection[] = [
+  {
+    id: '1',
+    name: 'Thoughts & Ramblings',
+    slug: 'thoughts-ramblings',
+    description: `A set of inspirational posts I've collected over the years.`,
+    entities: vaultMocks,
+    subscriptionTier: {
+      id: '1',
+      name: 'Tier 1',
+    },
+    organization: {
+      name: 'emilwidlund',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/1025102?v=4',
+    },
     createdAt,
   },
 ]

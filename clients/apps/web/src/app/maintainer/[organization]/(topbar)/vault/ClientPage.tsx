@@ -2,7 +2,7 @@
 
 import { DashboardBody } from '@/components/Layout/DashboardLayout'
 import { StaggerReveal } from '@/components/Shared/StaggerReveal'
-import { VaultEntityTile } from '@/components/Vault/VaultEntityTile'
+import { VaultEntityTile } from '@/components/Vault/VaultTile'
 import { useCurrentOrgAndRepoFromURL } from '@/hooks'
 import { AddOutlined } from '@mui/icons-material'
 import Link from 'next/link'

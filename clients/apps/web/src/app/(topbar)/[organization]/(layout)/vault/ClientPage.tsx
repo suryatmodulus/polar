@@ -1,8 +1,8 @@
 'use client'
 
-import { vaultMocks } from '@/app/maintainer/[organization]/(topbar)/vault/data'
+import { vaultCollectionMocks } from '@/app/maintainer/[organization]/(topbar)/vault/data'
 import { StaggerReveal } from '@/components/Shared/StaggerReveal'
-import { VaultEntityTile } from '@/components/Vault/VaultEntityTile'
+import { VaultCollectionTile } from '@/components/Vault/VaultTile'
 import { Organization } from '@polar-sh/sdk'
 import Link from 'next/link'
 
@@ -13,15 +13,15 @@ const ClientPage = ({ organization }: { organization: Organization }) => {
         <h2 className="text-lg font-medium">Vault</h2>
       </div>
       <StaggerReveal className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {vaultMocks.map((entity) => (
+        {vaultCollectionMocks.map((collection) => (
           <StaggerReveal.Child
-            key={entity.id}
+            key={collection.id}
             className="flex flex-grow flex-col"
           >
-            <Link href={`/${organization?.name}/vault/${entity.slug}`}>
-              <VaultEntityTile
-                entity={entity}
-                link={`/${organization?.name}/vault/${entity.slug}`}
+            <Link href={`/${organization?.name}/vault/${collection.slug}`}>
+              <VaultCollectionTile
+                collection={collection}
+                link={`/${organization?.name}/vault/${collection.slug}`}
               />
             </Link>
           </StaggerReveal.Child>
